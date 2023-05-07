@@ -8,6 +8,7 @@ const url = {
     register: "/register",
     majors: "/majors", //bên trái là của js bên phải là của api
     students: "/students", //bên trái là của js bên phải là của api
+    product: "/product",
 
 };
 

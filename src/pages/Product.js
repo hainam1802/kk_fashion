@@ -1,7 +1,31 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import majorService from "../services/majorService";
+import {json, Link, NavLink, useNavigate, useParams} from "react-router-dom";
+import productService from "../services/productService";
+import {Nav} from "react-bootstrap";
+import data from "bootstrap/js/src/dom/data";
 const Product = (props) => {
+    const [products, setProducts] = useState([]);
+    const [attributes, setAttributes] = useState([]);
+    const [currentCategory, setCurrentCategory] = useState([]);
+    const [blogs, setBlogs] = useState([]);
+    const navigate = useNavigate();
+    const { id,category } = useParams();
+
+
+
+    useEffect(() => {
+        productService.get(category,id).then((res) => {
+            setProducts(res.data);
+            setAttributes(res.data_attribute);
+            setCurrentCategory(res.currentCategory);
+            setBlogs(res.items_blog);
+        });
+    }, [category,id, navigate]);
+
     return (
         <>
+            {/*breadcrums*/}
             <div className="page-header single-breadcrums hidden-sm-down" style={{paddingTop: "160px"}}>
                 <div className="page-breadcrumbs">
                     <nav data-depth="4" className="breadcrumbs">
@@ -13,28 +37,37 @@ const Product = (props) => {
                                 <meta itemProp="position" content="1" />
                                 <span className="sep">/</span>
                             </li>
-                            <li itemProp="itemListElement" itemScope="" itemType="http://schema.org/ListItem">
-                                <a itemProp="item" href="https://www.kkfashion.vn/thoi-trang-cong-so">
-                                    <span itemProp="name">Thời trang công sở</span>
-                                </a>
-                                <meta itemProp="position" content="2"  />
-                                <span className="sep">/</span>
-                            </li>
-                            <li itemProp="itemListElement" itemScope="" itemType="http://schema.org/ListItem">
-                                <a itemProp="item" href="https://www.kkfashion.vn/chan-vay-cong-so">
-                                    <span itemProp="name">Chân váy</span>
-                                </a>
-                                <meta itemProp="position" content="3" />
-                                <span className="sep">/</span>
-                            </li>
-                            <li itemProp="itemListElement" itemScope="" itemType="http://schema.org/ListItem">
-                                <span itemProp="name" className="last">Chân váy midi xòe xếp ly họa tiết caro</span>
-                                <meta itemProp="position" content="4" />
-                            </li>
+                            {
+                                currentCategory.title?(
+                                    <li itemProp="itemListElement" >
+                                        <Link to={`/${currentCategory.slug}`} >
+                                            <span >{currentCategory.title}</span>
+                                        </Link>
+                                        <meta itemProp="position" content="2"  />
+                                        <span className="sep">/</span>
+                                    </li>
+                                ):(
+                                    <></>
+                                )
+                            }
+                            {
+                                products.title?(
+                                    <li itemProp="itemListElement" >
+                                        <Link to="#" >
+                                            <span >{products.title}</span>
+                                        </Link>
+                                        <meta itemProp="position" content="2"  />
+                                    </li>
+                                ):(
+                                    <></>
+                                )
+                            }
                         </ol>
                     </nav>
                 </div>
             </div>
+
+
             <div className="content">
                 <div className="container">
                     <section id="main">
@@ -46,127 +79,70 @@ const Product = (props) => {
                                         <div className="product-cover blance-images">
                                             <a className="trigger-zoom" href="javascript:;"></a>
                                             <figure className="slicker" id="product-images">
-                                                <div className="slick-item gallery__image play-video">
-                                                    <video className="slide-video slide-media" autoPlay loop muted
-                                                           poster="https://cdn.kkfashion.vn/21857-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=768">
-                                                        <source
-                                                            src="https://media.kkfashion.vn/video/soak-up-the-sun/CV05-17.mp4"
-                                                            type="video/mp4"/>
-                                                    </video>
-                                                </div>
-                                                <div className="slick-item gallery__image jws-image-zoom"
-                                                     data-thumb="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=656">
-                                                    <img
-                                                        className="img-responsive "
-                                                        src="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        data-src="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                    />
-                                                </div>
-                                                <div className="slick-item gallery__image jws-image-zoom"
-                                                     data-thumb="https://cdn.kkfashion.vn/21857-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=656">
-                                                    <img
-                                                        className="img-responsive "
-                                                        src="https://cdn.kkfashion.vn/21857-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        data-src="https://cdn.kkfashion.vn/21857-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                    />
-                                                </div>
-                                                <div className="slick-item gallery__image jws-image-zoom"
-                                                     data-thumb="https://cdn.kkfashion.vn/21858-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=656">
-                                                    <img
-                                                        className="img-responsive lazyload"
-                                                        src="https://cdn.kkfashion.vn/21858-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        data-src="https://cdn.kkfashion.vn/21858-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                    />
-                                                </div>
-                                                <div className="slick-item gallery__image jws-image-zoom"
-                                                     data-thumb="https://cdn.kkfashion.vn/21819-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=656">
-                                                    <img
-                                                        className="img-responsive lazyload"
-                                                        src="https://cdn.kkfashion.vn/21819-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        data-src="https://cdn.kkfashion.vn/21819-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                    />
-                                                </div>
-                                                <div className="slick-item gallery__image jws-image-zoom"
-                                                     data-thumb="https://cdn.kkfashion.vn/21820-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=656">
-                                                    <img
-                                                        className="img-responsive lazyload"
-                                                        src="https://cdn.kkfashion.vn/21820-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        data-src="https://cdn.kkfashion.vn/21820-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                    />
-                                                </div>
+                                                {
+                                                    products.image_extension?(
+                                                        <>
+                                                            { JSON.parse(products.image_extension).map((aImageExtension, idx) => (
+                                                                    <div className="slick-item gallery__image jws-image-zoom"
+                                                                         key={idx}
+                                                                         data-thumb={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=768`}>                                                                        <img
+                                                                            className="img-responsive "
+                                                                            src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
+                                                                            alt="Chân váy midi xòe xếp ly họa tiết caro"
+                                                                            data-src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
+                                                                        />
+                                                                    </div>
+                                                                )
+                                                            )}
+                                                        </>
+                                                    ):(
+                                                        <div className="slick-item"
+                                                             data-thumb="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=656">
+                                                            <img
+                                                                className="img-responsive "
+                                                                src="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
+                                                                alt="Chân váy midi xòe xếp ly họa tiết caro"
+                                                                data-src="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
+                                                            />
+                                                        </div>
+                                                    )
+                                                }
+
+
 
                                             </figure>
                                         </div>
-                                        <div className="video-mobile">
-                                            <div className="watch-video">
-                                                <a href="javascript:;"><i className="pe-7s-play"></i>Video</a>
-                                            </div>
-                                        </div>
+
                                         <div className="product-thumbnails" id="product-thumbnails">
                                             <div className="thumbnails columns-3">
-                                                <div className="thumb1 watch-video hidden-xs">
-                                                    <a href="javascript:;"><i className="pe-7s-play"></i>Video</a>
-                                                </div>
-                                                <div className="thumb1">
-                                                    <img
-                                                        className="thumb js-thumb selected"
-                                                        src="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=150"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        width="78"
-                                                        itemProp="image"
-                                                    />
-                                                </div>
-                                                <div className="thumb1">
-                                                    <img
-                                                        className="thumb js-thumb"
-                                                        src="https://cdn.kkfashion.vn/21857-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=150"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        width="78"
-                                                        itemProp="image"
-                                                    />
-                                                </div>
-                                                <div className="thumb1">
-                                                    <img
-                                                        className="thumb js-thumb"
-                                                        src="https://cdn.kkfashion.vn/21858-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=150"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        width="78"
-                                                        itemProp="image"
-                                                    />
-                                                </div>
-                                                <div className="thumb1">
-                                                    <img
-                                                        className="thumb js-thumb"
-                                                        src="https://cdn.kkfashion.vn/21819-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=150"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        width="78"
-                                                        itemProp="image"
-                                                    />
-                                                </div>
-                                                <div className="thumb1">
-                                                    <img
-                                                        className="thumb js-thumb"
-                                                        src="https://cdn.kkfashion.vn/21820-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=150"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        width="78"
-                                                        itemProp="image"
-                                                    />
-                                                </div>
-                                                <div className="thumb1">
-                                                    <img
-                                                        className="thumb js-thumb"
-                                                        src="https://cdn.kkfashion.vn/21599-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=150"
-                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                        width="78"
-                                                        itemProp="image"
-                                                    />
-                                                </div>
-
+                                                {
+                                                    products.image_extension?(
+                                                        <>
+                                                            { JSON.parse(products.image_extension).map((aImageExtension, idx) => (
+                                                                    <div className="thumb1" data-id={idx} key={idx}>
+                                                                        <img
+                                                                            className={`thumb js-thumb ${idx === 0 ? 'selected' : ''}`}
+                                                                            src={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=150`}
+                                                                            alt={products.title}
+                                                                            width="78"
+                                                                            itemProp="image"
+                                                                        />
+                                                                    </div>
+                                                                )
+                                                            )}
+                                                        </>
+                                                    ):(
+                                                        <div className="thumb1">
+                                                            <img
+                                                                className="thumb js-thumb"
+                                                                src="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=150"
+                                                                alt="Chân váy midi xòe xếp ly họa tiết caro"
+                                                                width="78"
+                                                                itemProp="image"
+                                                            />
+                                                        </div>
+                                                    )
+                                                }
                                             </div>
                                         </div>
                                     </div>
