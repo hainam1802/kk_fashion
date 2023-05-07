@@ -8,38 +8,135 @@ const Header = (props) => {
   const dispatch = useDispatch()
   return (
     <>
-      <Navbar bg="primary" variant="dark" expand="lg">
-        <Container>
-          <Navbar.Brand as={Link} to="/home">
-            <img
-              src={`${process.env.PUBLIC_URL}/img/graduate.png`}
-              alt=""
-              style={{ height: "25px" }}
-              className="me-1"
-            />
-            Student Management
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link as={NavLink} to="/major">
-                Major
-              </Nav.Link>
-              <Nav.Link as={NavLink} to="/student">
-                Student
-              </Nav.Link>
-            </Nav>
-            <Nav>
-              <Nav.Link as={NavLink} to="/#">
-                Welcom to ... {userInfo.fullName}
-              </Nav.Link>
-              <Nav.Link onClick={() => dispatch(logout())}>
-                <i className="bi-box-arrow-right"></i>
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <div id="header-page" className="nav-fixed">
+        <div className="top-bar">
+          <div className="row">
+            <div className="col-sm-6 col-md-push-3 col-xs-7">
+              <div className="header-contact text-center fontutm">Miễn phí vận chuyển mọi đơn hàng</div>
+            </div>
+            <div className="col-md-3 col-sm-6 col-md-push-3 text-right col-xs-5">
+              <div className="header-top-wrap">
+                <div className="my-account">
+                  <a className="account" href="https://www.kkfashion.vn/my-account">
+                    <span className="fontutm">  Tài khoản    </span>
+                    <i className="pe-7s-user"></i><span className="acount-tt"></span>
+                  </a>
+                </div>
+                <div id="_desktop_cart">
+                  <div className="blockcart my-cart " data-refresh-url="//www.kkfashion.vn/module/ps_shoppingcart/ajax">
+                    <a rel="nofollow" href="//www.kkfashion.vn/cart?action=show">
+                      <span className="hidden-xs">Giỏ hàng</span>
+                      <i className="pe-7s-shopbag"></i><span className="count">0</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="sticky-wrapper" id="mainmenu-area-sticky-wrapper">
+          <div className="sticky-wrapper" id="sticky-wrapper">
+            <div className="mainmenu-area">
+              <nav className="menu_nav">
+                <div className="flex mainmenu">
+                  <div className="position_fix fontutm w45">
+                    <div className="button_menu hidden-lg hidden-md"><i className="fa fa-bars"></i></div>
+                    <ul className="nav navbar-nav hidden-xs hidden-sm" id="nav">
+                      <li className="menu-item"><a data-list-type="Header" data-content-type="Navigation"
+                                                   data-content-title="Giới thiệu" data-content-id="4"
+                                                   href="https://www.kkfashion.vn/page/gioi-thieu">Giới thiệu</a>
+                        <div className="sub-menu-dropdown">
+                          <ul className="sub-menu">
+                            <li><a data-list-type="Header" data-content-type="Navigation"
+                                   data-content-title="Về chúng tôi" data-content-id="4"
+                                   href="https://www.kkfashion.vn/page/gioi-thieu">Về chúng tôi</a></li>
+                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Liên hệ"
+                                   data-content-id="contact" href="https://www.kkfashion.vn/lien-he-voi-chung-toi">Liên
+                              hệ</a></li>
+                            <li><a data-list-type="Header" data-content-type="Navigation"
+                                   data-content-title="Chính sách bảo mật" data-content-id="3"
+                                   href="https://www.kkfashion.vn/page/chinh-sach-bao-mat-van-chuyen-giao-nhan-va-doi-hang">Chính
+                              sách bảo mật</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li className="menu-item"><a data-list-type="Header" data-content-type="Navigation"
+                                                   data-content-title="Shop Online" data-content-id="2"
+                                                   href="https://www.kkfashion.vn/thoi-trang-cong-so">Shop Online</a>
+                        <div className="sub-menu-dropdown">
+                          <ul className="sub-menu">
+                            <li><a data-list-type="Header" data-content-type="Navigation"
+                                   data-content-title="New Collection" data-content-id="116" className="sales"
+                                   href="https://www.kkfashion.vn/new-collection">New Collection</a></li>
+                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Áo Dài"
+                                   data-content-id="125" className="" href="https://www.kkfashion.vn/ao-dai">Áo Dài</a>
+                            </li>
+                            <li><a data-list-type="Header" data-content-type="Navigation"
+                                   data-content-title="Váy đầm công sở" data-content-id="65" className=""
+                                   href="https://www.kkfashion.vn/vay-dam-cong-so">Váy đầm công sở</a></li>
+                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Áo"
+                                   data-content-id="63" className="" href="https://www.kkfashion.vn/ao">Áo</a></li>
+                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Áo khoác"
+                                   data-content-id="62" className="" href="https://www.kkfashion.vn/ao-khoac">Áo
+                              khoác</a></li>
+                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Quần"
+                                   data-content-id="64" className="" href="https://www.kkfashion.vn/quan">Quần</a></li>
+                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Chân váy"
+                                   data-content-id="112" className="" href="https://www.kkfashion.vn/chan-vay-cong-so">Chân
+                              váy</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li className="menu-item"><a data-list-type="Header" data-content-type="Navigation"
+                                                   data-content-title="Blog" data-content-id="blog"
+                                                   href="https://www.kkfashion.vn/blog">Blog</a></li>
+                      <li className="menu-item"><a data-list-type="Header" data-content-type="Navigation"
+                                                   data-content-title="Lookbook" data-content-id="lookbook"
+                                                   href="https://www.kkfashion.vn/lookbook">Lookbook</a></li>
+                    </ul>
+                  </div>
+                  <div className="logo-center text-center">
+                    <h1 className="top-logo">
+                      <a className="logo-blance" href="https://www.kkfashion.vn/">
+                        <img className="logo lozad" src="/img/transparent.png"
+                             data-src="https://cdn.kkfashion.vn/img/kk-fashion-logo-1552814160.jpg"
+                             alt="K&amp;K Fashion"/></a>
+                    </h1>
+                  </div>
+                  <div className="right-header text-right w45 flex">
+                    <div className="showroom ml-auto">
+                      <ul className="nav navbar-nav hidden-xs hidden-sm" id="nav-right">
+
+                        <li className="menu-item"><a href="javascript:;">Hướng dẫn mua hàng</a>
+                          <div className="sub-menu-dropdown">
+                            <ul className="sub-menu">
+                              <li><a data-list-type="Header" data-content-type="Navigation"
+                                     data-content-title="Các bước mua hàng" data-content-id="9"
+                                     href="https://www.kkfashion.vn/page/cac-buoc-mua-hang">Các bước mua hàng</a></li>
+                              <li><a data-list-type="Header" data-content-type="Navigation"
+                                     data-content-title="Quy định đổi hàng" data-content-id="7"
+                                     href="https://www.kkfashion.vn/page/quy-dinh-doi-hang">Quy định đổi hàng</a></li>
+                              <li><a data-list-type="Header" data-content-type="Navigation"
+                                     data-content-title="Thông tin tài khoản" data-content-id="8"
+                                     href="https://www.kkfashion.vn/page/thong-tin-tai-khoan">Thông tin tài khoản</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="search-form">
+                      <div className="action-search"><a href="javascript:;" aria-label="Tìm kiếm"><i
+                          className="pe-7s-search"></i></a></div>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </>
   );
 };
