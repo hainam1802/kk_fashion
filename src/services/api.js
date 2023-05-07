@@ -3,8 +3,9 @@ import store from "./../store/reducers/index"
 import {hideLoading, showLoading} from "react-redux-loading-bar";
 
 const url = {
-    baseUrl: "https://restfulapi.dnd-group.net/api",
+    baseUrl: "https://shop.decor.tichhop.pro/api/client",
     login: "/login",
+    register: "/register",
     majors: "/majors", //bên trái là của js bên phải là của api
     students: "/students", //bên trái là của js bên phải là của api
 
@@ -29,8 +30,9 @@ instance.interceptors.request.use((request) =>{
 );
 
 instance.interceptors.response.use(
+
     (response) =>{
-        setTimeout(()=>store.dispatch(hideLoading()),100)
+        setTimeout(()=>store.dispatch(hideLoading()),100);
         return response.data
     } , // thanh cong
 
@@ -48,6 +50,7 @@ instance.interceptors.response.use(
                     window.location.href = "/no-permission";
                     break;
                 default:
+
                     break;
             }
         }
