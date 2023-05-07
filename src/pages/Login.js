@@ -6,6 +6,11 @@ import userService from "../services/userService";
 import {useDispatch} from "react-redux";
 import {login} from "../store/auth";
 import CustomButton from "../components/CustomButton";
+import Header from "../containers/Header";
+import { Link, NavLink } from "react-router-dom";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import {Navigate} from "react-router";
+import {useSelector} from "react-redux";
 
 const Login = (props) => {
   const [message, setMessage] = useState(""); // state
@@ -15,20 +20,19 @@ const Login = (props) => {
   const usernameRef = useRef(); //tạo ra Ref gán vào usernameref
   const passwordRef = useRef(); //tạo ra Ref gán vào passwordref
 
-
   const submitHandler = (e) => {
     e.preventDefault(); // ngăn chặn refesh khi submit mặc định trên form, thẻ a > di chuyển trang;
     const username = usernameRef.current.value; //this.usernameRef.current tương đương vs document.getElementById(username)
     const password = passwordRef.current.value;
-    // console.log(username, password);
-    setIsWaiting(true)
+    console.log(username, password);
+    // setIsWaiting(true)
     userService.login(username, password).then((res) => {
-      setIsWaiting(false)
-      if (res.errorCode === 0) {
+      setIsWaiting(false);
+      if (res.status === 1) {
         setMessage("");
         dispatch(login({
-          token: res.data.accessToken,
-          userInfo: res.data
+          token: res.token,
+          userInfo: res.user
         }))
         navigate("/");
       } else {
@@ -43,59 +47,88 @@ const Login = (props) => {
   };
 
   // document.getElementById('txtUsername').focus();
-
-  useEffect(() => {
-    usernameRef.current.focus();
-  }, []); //! focus là thẻ input username khi render lại hoặc lần đầu truy cập
+  // useEffect(() => {
+  //   usernameRef.current.focus();
+  // }, []); //! focus là thẻ input username khi render lại hoặc lần đầu truy cập
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   return (
     <>
-      <div className="container h-100">
-        <div className="row justify-content-center h-100 align-items-center">
-          <div className="col-sm-8 col-lg-5">
-            <div className="card bg-primary">
-              <div className="card-header text-white">
-                <h4 className="card-title mb-0">
-                  <i className="bi-grid-3x3-gap-fill"></i> Login
-                </h4>
-              </div>
-              <div className="card-body bg-white rounded-bottom">
-                <p className="text-center text-danger">{message}</p>
-                <form onSubmit={submitHandler}>
-                  <Input
-                    inputRef={usernameRef} //tạo lính canh để theo dõi
-                    id="txtUserName"
-                    label="User name"
-                    type="text"
-                    autoComplete="off"
-                    placeholder="Enter your username"
-                    lastRow
-                    // labelSize = "4"
-                  />
-                  <Input
-                    inputRef={passwordRef}
-                    id="txtPassword"
-                    label="Password"
-                    type="password"
-                    placeholder="Enter your password"
-                    lastRow
-                  />
-                  {/* 
-                    <Input id="txtNote" rows="2" label="Note" /> */}
-
-                  <div className="row">
-                    <div className="offset-sm-3 col-auto">
-                      <CustomButton type="submit" color="primary" isLoading={isWaiting} disabled={isWaiting} >
-                        Sign dsd
-                      </CustomButton>
+    {isLoggedIn ? (
+        <Navigate to="/" />
+    ):(
+      <>
+        <Header />
+        <div className="content">
+          <div className="container pb120">
+            <div className="login-container">
+              <section className="login-form">
+                <div className="col-md-12 ">
+                  <form id="login-form" onSubmit={submitHandler}
+                        className="user-form m-auto" style={{width: "50%"}} >
+                    <div className="form-title">
+                      <span>Đăng nhập vào tài khoản của bạn</span>
                     </div>
-                  </div>
-                </form>
-              </div>
+                    <section>
+                      <div className="form-body">
+                        <div className="row">
+                          <p className="text-center text-danger">{message}</p>
+                          <div className="form-group">
+                            <label className="col-sm-4"><i className="fa fa-user-o"></i>
+                              Tài khoản <span className="text-danger">*</span>
+                            </label>
+                            <div className="col-sm-8">
+                              <div className="form-wrapper">
+                                <input className="form-control"
+                                       ref={usernameRef}
+                                       name="email"
+                                       type="text"  maxLength="128"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="clearfix"></div>
+                        <div className="row">
+                          <div className="form-group">
+                            <label className="col-sm-4">
+                              <i className="fa fa-lock"></i>
+                              Mật khẩu<span className="text-danger">*</span>
+                            </label>
+                            <div className="col-sm-8">
+                              <div className="form-wrapper">
+                                <input className="form-control"
+                                       name="password"
+                                       ref={passwordRef}
+                                       type="password"
+                                       maxLength="128"
+                                       minLength="6" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="form-footer">
+                        <div>
+                          <input type="hidden" name="submitLogin" value="1"/>
+                          <button className="form-control-submit first-btn"
+                                  isLoading={isWaiting} disabled={isWaiting} type="submit">
+                            Đăng nhập
+                          </button>
+                          <Nav.Link as={NavLink} to="/register" className="second-btn fright">
+                            Tạo tài khoản mới
+                          </Nav.Link>
+                        </div>
+                      </div>
+                    </section>
+                  </form>
+                </div>
+              </section>
             </div>
           </div>
         </div>
-      </div>
+      </>
+    )}
+
     </>
   );
 };

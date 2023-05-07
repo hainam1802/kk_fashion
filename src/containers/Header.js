@@ -18,7 +18,7 @@ const Header = (props) => {
               <div className="header-top-wrap">
                 <div className="my-account">
                   <a className="account" href="https://www.kkfashion.vn/my-account">
-                    <span className="fontutm">  Tài khoản    </span>
+                    <span className="fontutm">  {userInfo.username ?? 'Tài khoản'}    </span>
                     <i className="pe-7s-user"></i><span className="acount-tt"></span>
                   </a>
                 </div>
