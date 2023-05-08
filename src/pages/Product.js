@@ -4,14 +4,19 @@ import {json, Link, NavLink, useNavigate, useParams} from "react-router-dom";
 import productService from "../services/productService";
 import {Nav} from "react-bootstrap";
 import data from "bootstrap/js/src/dom/data";
+import $ from 'jquery';
+// import 'slick-carousel/slick/slick.css';
+// import 'slick-carousel/slick/slick-theme.css';
+// import "slick-carousel/slick/slick.js";
 const Product = (props) => {
     const [products, setProducts] = useState([]);
     const [attributes, setAttributes] = useState([]);
+    const [imageExtension, setImageExtension] = useState([]);
+    const [imageExtension2, setImageExtension2] = useState([]);
     const [currentCategory, setCurrentCategory] = useState([]);
     const [blogs, setBlogs] = useState([]);
     const navigate = useNavigate();
     const { id,category } = useParams();
-
 
 
     useEffect(() => {
@@ -20,11 +25,87 @@ const Product = (props) => {
             setAttributes(res.data_attribute);
             setCurrentCategory(res.currentCategory);
             setBlogs(res.items_blog);
-        });
+            setImageExtension(JSON.parse(res.data.image_extension));
+            // $("#product-thumbnails .thumbnails").not(".slick-initialized").on("init", function(slick) {
+            //     $("#product-thumbnails").css({
+            //         visibility: "visible",
+            //         opacity: "1"
+            //     })
+            // }).slick({
+            //     slidesToShow: 4,
+            //     slidesToScroll: 1,
+            //     centerMode: !1,
+            //     asNavFor: "#product-images",
+            //     arrows: !1,
+            //     vertical: !0,
+            //     focusOnSelect: !0,
+            //     accessibility: !1,
+            //     waitForAnimate: !0,
+            //     transformEnabled: !1,
+            //     responsive: [{
+            //         breakpoint: 480,
+            //         settings: {
+            //             slidesToShow: 5,
+            //             slidesToScroll: 1,
+            //             centerMode: !0,
+            //             asNavFor: "#product-images",
+            //             arrows: !1,
+            //             vertical: !1,
+            //             focusOnSelect: !0,
+            //             accessibility: !1,
+            //             waitForAnimate: !0,
+            //             transformEnabled: !1,
+            //         },
+            //     }, ],
+            //
+            // })
+            // $("#product-images").not(".slick-initialized").on("init", function(slick) {
+            //     $("#product-images .slick-item").css({
+            //         display: "block"
+            //     });
+            // }).slick({
+            //     slidesToScroll: 1,
+            //     slidesToShow: 1,
+            //     asNavFor: "#product-thumbnails .thumbnails",
+            //     fade: !0,
+            //     prevArrow: '<span class="ti-angle-left"></span>',
+            //     nextArrow: '<span class="ti-angle-right"></span>',
+            //     centerMode: !1,
+            //     transformEnabled: !1,
+            //     waitForAnimate: !1,
+            //     responsive: [{
+            //         breakpoint: 767,
+            //         settings: {
+            //             slidesToShow: 1,
+            //             slidesToScroll: 1,
+            //             asNavFor: null,
+            //             fade: !1,
+            //             vertical: !1,
+            //             centerMode: !1,
+            //             focusOnSelect: !1,
+            //             accessibility: !1,
+            //             arrows: !1,
+            //             dots: !0,
+            //         },
+            //     }, ],
+            // });
+            //
+
+
+        }
+
+        );
     }, [category,id, navigate]);
+
+
+    // eslint-disable-next-line array-callback-return
+    Object.keys(attributes).forEach((key ,hehe, idx) => {
+            console.log(key,hehe,idx)
+        })
 
     return (
         <>
+
             {/*breadcrums*/}
             <div className="page-header single-breadcrums hidden-sm-down" style={{paddingTop: "160px"}}>
                 <div className="page-breadcrumbs">
@@ -67,96 +148,73 @@ const Product = (props) => {
                 </div>
             </div>
 
-
             <div className="content">
                 <div className="container">
                     <section id="main">
                         <div className="row">
                             <div className="content-product-left col-md-6 col-sm-7 col-xs-12">
-                                <section className="page-content" id="content">
-                                    <div className="product-images-content">
-                                        <div className="images-container"></div>
-                                        <div className="product-cover blance-images">
-                                            <a className="trigger-zoom" href="javascript:;"></a>
-                                            <figure className="slicker" id="product-images">
-                                                {
-                                                    products.image_extension?(
-                                                        <>
-                                                            { JSON.parse(products.image_extension).map((aImageExtension, idx) => (
-                                                                    <div className="slick-item gallery__image jws-image-zoom"
+                                        <section className="page-content" id="content">
+                                            <div className="product-images-content">
+                                                <div className="images-container"></div>
+                                                    <div className="product-cover blance-images">
+                                                        <a className="trigger-zoom" href="javascript:;"></a>
+                                                        <figure className="slicker" id="product-images">
+
+                                                            { imageExtension.map((aImageExtension, idx) => (
+                                                                    <div
+                                                                         className={`slick-item gallery__image jws-image-zoom ${idx === 0 ? 'show' : ''}`}
                                                                          key={idx}
                                                                          data-thumb={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=768`}>                                                                        <img
-                                                                            className="img-responsive "
-                                                                            src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
-                                                                            alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                                            data-src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
-                                                                        />
+                                                                        className="img-responsive "
+                                                                        src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
+                                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
+                                                                        data-src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
+                                                                    />
                                                                     </div>
                                                                 )
                                                             )}
-                                                        </>
-                                                    ):(
-                                                        <div className="slick-item"
-                                                             data-thumb="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=656">
-                                                            <img
-                                                                className="img-responsive "
-                                                                src="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                                alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                                data-src="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg"
-                                                            />
-                                                        </div>
-                                                    )
-                                                }
+
+                                                        </figure>
+                                                    </div>
 
 
+                                                    <div className="product-thumbnails" id="product-thumbnails">
+                                                        <div className="thumbnails columns-3">
 
-                                            </figure>
-                                        </div>
-
-                                        <div className="product-thumbnails" id="product-thumbnails">
-                                            <div className="thumbnails columns-3">
-                                                {
-                                                    products.image_extension?(
-                                                        <>
-                                                            { JSON.parse(products.image_extension).map((aImageExtension, idx) => (
+                                                            { imageExtension.map((aImageExtension, idx) => (
                                                                     <div className="thumb1" data-id={idx} key={idx}>
                                                                         <img
                                                                             className={`thumb js-thumb ${idx === 0 ? 'selected' : ''}`}
                                                                             src={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=150`}
                                                                             alt={products.title}
                                                                             width="78"
-                                                                            itemProp="image"
                                                                         />
                                                                     </div>
                                                                 )
                                                             )}
-                                                        </>
-                                                    ):(
-                                                        <div className="thumb1">
-                                                            <img
-                                                                className="thumb js-thumb"
-                                                                src="https://cdn.kkfashion.vn/21856-large_default/chan-vay-midi-xoe-xep-ly-hoa-tiet-caro-cv05-17.jpg?w=150"
-                                                                alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                                width="78"
-                                                                itemProp="image"
-                                                            />
+
                                                         </div>
-                                                    )
-                                                }
+                                                    </div>
                                             </div>
-                                        </div>
+                                        </section>
                                     </div>
-                                </section>
-                            </div>
                             <div className="content-product-right col-md-6 col-sm-5 col-xs-12">
                                 <div className="shop-top">
-                                    <h1 className="product_title" itemProp="name">Chân váy midi xòe xếp ly họa tiết
-                                        caro</h1>
-                                    <p className="sku"><span className="fontutm">Mã SP : </span><span>CV05-17</span></p>
+                                    <h1 className="product_title" itemProp="name">
+                                        {products.title}
+
+                                    </h1>
+                                    <p className="sku"><span className="fontutm">Mã SP : </span><span> {products.id}</span></p>
                                     <div className="product-prices price">
                                         <div className="product-price h5">
                                             <div className="current-price">
-                                                <span className="amount" itemProp="price" content="390000">390.000 ₫</span>
+                                                <span className="amount text-danger" style={{paddingRight: '8px'}}>
+                                                    <small>
+                                                        <del className="text-danger">{Intl.NumberFormat().format(products.price_old)}</del>
+                                                    </small>
+                                                </span>
+
+                                                <span className="amount">{Intl.NumberFormat().format(products.price)}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -165,39 +223,40 @@ const Product = (props) => {
                                     <div className="product-actions shop-bottom js-product-actions">
                                         <form action="https://www.kkfashion.vn/cart" method="post"
                                               id="add-to-cart-or-refresh">
-                                            <input type="hidden" name="token" value="835acac5685788a8960ebc94aa75607f"/>
-                                            <input type="hidden" name="id_product" value="3977"
+                                              <input type="hidden" name="id_product" value="3977"
                                                    id="product_page_product_id"/>
                                             <input type="hidden" name="id_customization" value="0"
                                                    id="product_customization_id"/>
                                             <div className="product-variants">
-                                                <div className="clearfix product-variants-item">
-                                                    <div className="size-wrap">
-                                                        <label><span>Size</span></label>
 
-                                                        <label className="opt-size" data-size="S">
-                                                            <input data-product-attribute="1" name="group[1]"
-                                                                   className="opt" type="radio" value="65"/>
-                                                            <span className="opt-real">S</span>
-                                                        </label>
-                                                        <label className="opt-size" data-size="M">
-                                                            <input data-product-attribute="1" name="group[1]"
-                                                                   className="opt" type="radio" value="66"/>
-                                                            <span className="opt-real">M</span>
-                                                        </label>
-                                                        <label className="opt-size" data-size="L">
-                                                            <input data-product-attribute="1" name="group[1]"
-                                                                   className="opt" type="radio" value="67"/>
-                                                            <span className="opt-real">L</span>
-                                                        </label>
-                                                        <label className="opt-size" data-size="XL">
-                                                            <input data-product-attribute="1" name="group[1]"
-                                                                   className="opt" type="radio" value="68"/>
-                                                            <span className="opt-real">XL</span>
-                                                        </label>
-                                                    </div>
+                                                {
+                                                    Object.keys(attributes).map((aAttributes,idx) => (
+                                                        <div className=" product-variants-item">
+                                                            <div className="size-wrap" key={idx}>
 
-                                                </div>
+                                                                <label style={{marginRight: "12px"}}><span>{attributes[aAttributes].title}</span></label>
+                                                                {
+                                                                    Object.keys(attributes[aAttributes].content).map((aAttributes1,idx1) => (
+                                                                        <label className="opt-size">
+                                                                            <input
+                                                                                   name={`options[${aAttributes}]`}
+                                                                                   className="opt" type="radio"
+                                                                                   value={aAttributes1}/>
+                                                                            <span className="opt-real">{attributes[aAttributes].content[aAttributes1]}</span>
+                                                                        </label>
+
+                                                                    ))
+                                                                }
+                                                            </div>
+
+                                                        </div>
+
+                                                    ))
+                                                }
+
+
+
+
                                             </div>
                                             <section className="product-discounts"></section>
                                             <div className="product-add-to-cart js-product-add-to-cart "
@@ -328,8 +387,8 @@ const Product = (props) => {
                     </section>
                 </div>
 
-                <div className="block productCat">
-                    <section className="featured-products clearfix mt-3">
+                <div className="block productCat" style={{marginTop: '200px'}}>
+                    <section className="featured-products  mt-3">
                         <div className="container">
                             <div className="block-heading">
                                 <h4 className="text-center fontutm block-title">Sản phẩm cùng danh mục</h4>
