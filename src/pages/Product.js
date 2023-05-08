@@ -2,12 +2,15 @@ import React, {useEffect, useState} from "react";
 import majorService from "../services/majorService";
 import {json, Link, NavLink, useNavigate, useParams} from "react-router-dom";
 import productService from "../services/productService";
-import {Nav} from "react-bootstrap";
-import data from "bootstrap/js/src/dom/data";
-import $ from 'jquery';
-// import 'slick-carousel/slick/slick.css';
-// import 'slick-carousel/slick/slick-theme.css';
-// import "slick-carousel/slick/slick.js";
+import {useFormik} from "formik";
+import * as Yup from "yup";
+import studentService from "../services/studentService";
+import {toast} from "react-toastify";
+import Input from "../components/Input";
+import {login} from "../store/auth";
+import {useDispatch, useSelector} from "react-redux";
+import {addcart} from "../store/cart";
+
 const Product = (props) => {
     const [products, setProducts] = useState([]);
     const [attributes, setAttributes] = useState([]);
@@ -17,8 +20,46 @@ const Product = (props) => {
     const [blogs, setBlogs] = useState([]);
     const navigate = useNavigate();
     const { id,category } = useParams();
+    const [isWaiting, setIsWaiting] = useState(false);
+    const dispatch = useDispatch();
+    const formilk = useFormik({
+        initialValues:{
+            id: null,
+            qty: 1,
+            options: null,
+            title: null,
+            slug: null,
+            price: 0,
+            price_base: 0,
+            image: null,
+        },
+        validationSchema: Yup.object({
+        }),
+        onSubmit: ((values => {
+            setIsWaiting(true);
+            handleSave(values)
+        }))
+    })
+    const cartItem = useSelector((state)=> state.cart.item)
+    const handleSave = (data)=>{
+        setIsWaiting(false)
+        // Tìm kiếm xem giá trị có tồn tại trong mảng không
+            // Lấy chuỗi JSON từ local storage
+            const cartItemsJson = localStorage.getItem('cartItems');
 
+            // Chuyển đổi chuỗi JSON thành một đối tượng JavaScript
+            const cartItems = JSON.parse(cartItemsJson);
 
+            // Nếu không có giá trị nào trong local storage, khởi tạo một mảng rỗng
+            const cartItemsArray = cartItems ? cartItems : [];
+            // Thêm một phần tử mới vào mảng
+            cartItemsArray.push(data);
+            // Lưu lại mảng vào local storage
+            localStorage.setItem('cartItems', JSON.stringify(cartItemsArray));
+
+        toast.success("Thêm vào giỏ hàng thành công!");
+
+    }
     useEffect(() => {
         productService.get(category,id).then((res) => {
             setProducts(res.data);
@@ -26,83 +67,16 @@ const Product = (props) => {
             setCurrentCategory(res.currentCategory);
             setBlogs(res.items_blog);
             setImageExtension(JSON.parse(res.data.image_extension));
-            // $("#product-thumbnails .thumbnails").not(".slick-initialized").on("init", function(slick) {
-            //     $("#product-thumbnails").css({
-            //         visibility: "visible",
-            //         opacity: "1"
-            //     })
-            // }).slick({
-            //     slidesToShow: 4,
-            //     slidesToScroll: 1,
-            //     centerMode: !1,
-            //     asNavFor: "#product-images",
-            //     arrows: !1,
-            //     vertical: !0,
-            //     focusOnSelect: !0,
-            //     accessibility: !1,
-            //     waitForAnimate: !0,
-            //     transformEnabled: !1,
-            //     responsive: [{
-            //         breakpoint: 480,
-            //         settings: {
-            //             slidesToShow: 5,
-            //             slidesToScroll: 1,
-            //             centerMode: !0,
-            //             asNavFor: "#product-images",
-            //             arrows: !1,
-            //             vertical: !1,
-            //             focusOnSelect: !0,
-            //             accessibility: !1,
-            //             waitForAnimate: !0,
-            //             transformEnabled: !1,
-            //         },
-            //     }, ],
-            //
-            // })
-            // $("#product-images").not(".slick-initialized").on("init", function(slick) {
-            //     $("#product-images .slick-item").css({
-            //         display: "block"
-            //     });
-            // }).slick({
-            //     slidesToScroll: 1,
-            //     slidesToShow: 1,
-            //     asNavFor: "#product-thumbnails .thumbnails",
-            //     fade: !0,
-            //     prevArrow: '<span class="ti-angle-left"></span>',
-            //     nextArrow: '<span class="ti-angle-right"></span>',
-            //     centerMode: !1,
-            //     transformEnabled: !1,
-            //     waitForAnimate: !1,
-            //     responsive: [{
-            //         breakpoint: 767,
-            //         settings: {
-            //             slidesToShow: 1,
-            //             slidesToScroll: 1,
-            //             asNavFor: null,
-            //             fade: !1,
-            //             vertical: !1,
-            //             centerMode: !1,
-            //             focusOnSelect: !1,
-            //             accessibility: !1,
-            //             arrows: !1,
-            //             dots: !0,
-            //         },
-            //     }, ],
-            // });
-            //
 
-
+            formilk.setFieldValue("id",res.data.id);
+            formilk.setFieldValue("title",res.data.title);
+            formilk.setFieldValue("slug",res.data.slug);
+            formilk.setFieldValue("price",res.data.price);
+            formilk.setFieldValue("price_base",res.data.price_old);
+            formilk.setFieldValue("image",res.data.image);
         }
-
         );
     }, [category,id, navigate]);
-
-
-    // eslint-disable-next-line array-callback-return
-    Object.keys(attributes).forEach((key ,hehe, idx) => {
-            console.log(key,hehe,idx)
-        })
-
     return (
         <>
 
@@ -153,51 +127,51 @@ const Product = (props) => {
                     <section id="main">
                         <div className="row">
                             <div className="content-product-left col-md-6 col-sm-7 col-xs-12">
-                                        <section className="page-content" id="content">
-                                            <div className="product-images-content">
-                                                <div className="images-container"></div>
-                                                    <div className="product-cover blance-images">
-                                                        <a className="trigger-zoom" href="javascript:;"></a>
-                                                        <figure className="slicker" id="product-images">
+                                <section className="page-content" id="content">
+                                    <div className="product-images-content">
+                                        <div className="images-container"></div>
+                                            <div className="product-cover blance-images">
+                                                <a className="trigger-zoom" href="javascript:;"></a>
+                                                <figure className="slicker" id="product-images">
 
-                                                            { imageExtension.map((aImageExtension, idx) => (
-                                                                    <div
-                                                                         className={`slick-item gallery__image jws-image-zoom ${idx === 0 ? 'show' : ''}`}
-                                                                         key={idx}
-                                                                         data-thumb={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=768`}>                                                                        <img
-                                                                        className="img-responsive "
-                                                                        src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
-                                                                        alt="Chân váy midi xòe xếp ly họa tiết caro"
-                                                                        data-src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
-                                                                    />
-                                                                    </div>
-                                                                )
-                                                            )}
+                                                    { imageExtension.map((aImageExtension, idx) => (
+                                                            <div
+                                                                 className={`slick-item gallery__image jws-image-zoom ${idx === 0 ? 'show' : ''}`}
+                                                                 key={idx}
+                                                                 data-thumb={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=768`}>                                                                        <img
+                                                                className="img-responsive "
+                                                                src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
+                                                                alt="Chân váy midi xòe xếp ly họa tiết caro"
+                                                                data-src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
+                                                            />
+                                                            </div>
+                                                        )
+                                                    )}
 
-                                                        </figure>
-                                                    </div>
-
-
-                                                    <div className="product-thumbnails" id="product-thumbnails">
-                                                        <div className="thumbnails columns-3">
-
-                                                            { imageExtension.map((aImageExtension, idx) => (
-                                                                    <div className="thumb1" data-id={idx} key={idx}>
-                                                                        <img
-                                                                            className={`thumb js-thumb ${idx === 0 ? 'selected' : ''}`}
-                                                                            src={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=150`}
-                                                                            alt={products.title}
-                                                                            width="78"
-                                                                        />
-                                                                    </div>
-                                                                )
-                                                            )}
-
-                                                        </div>
-                                                    </div>
+                                                </figure>
                                             </div>
-                                        </section>
+
+
+                                            <div className="product-thumbnails" id="product-thumbnails">
+                                                <div className="thumbnails columns-3">
+
+                                                    { imageExtension.map((aImageExtension, idx) => (
+                                                            <div className="thumb1" data-id={idx} key={idx}>
+                                                                <img
+                                                                    className={`thumb js-thumb ${idx === 0 ? 'selected' : ''}`}
+                                                                    src={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=150`}
+                                                                    alt={products.title}
+                                                                    width="78"
+                                                                />
+                                                            </div>
+                                                        )
+                                                    )}
+
+                                                </div>
+                                            </div>
                                     </div>
+                                </section>
+                            </div>
                             <div className="content-product-right col-md-6 col-sm-5 col-xs-12">
                                 <div className="shop-top">
                                     <h1 className="product_title" itemProp="name">
@@ -221,29 +195,28 @@ const Product = (props) => {
                                 </div>
                                 <div className="product-information">
                                     <div className="product-actions shop-bottom js-product-actions">
-                                        <form action="https://www.kkfashion.vn/cart" method="post"
-                                              id="add-to-cart-or-refresh">
-                                              <input type="hidden" name="id_product" value="3977"
-                                                   id="product_page_product_id"/>
-                                            <input type="hidden" name="id_customization" value="0"
-                                                   id="product_customization_id"/>
-                                            <div className="product-variants">
+                                        <form>
+
+                                            <div className="">
 
                                                 {
                                                     Object.keys(attributes).map((aAttributes,idx) => (
-                                                        <div className=" product-variants-item">
-                                                            <div className="size-wrap" key={idx}>
+                                                        <div className=" product-variants-item " style={{marginBottom: "12px"}}>
+                                                            <div className="" key={idx}>
 
                                                                 <label style={{marginRight: "12px"}}><span>{attributes[aAttributes].title}</span></label>
                                                                 {
                                                                     Object.keys(attributes[aAttributes].content).map((aAttributes1,idx1) => (
                                                                         <label className="opt-size">
                                                                             <input
-                                                                                   name={`options[${aAttributes}]`}
+                                                                                   name={`options[${idx}]`}
+                                                                                   onChange={formilk.handleChange}
                                                                                    className="opt" type="radio"
-                                                                                   value={aAttributes1}/>
+                                                                                   value={attributes[aAttributes].content[aAttributes1]}/>
                                                                             <span className="opt-real">{attributes[aAttributes].content[aAttributes1]}</span>
                                                                         </label>
+
+
 
                                                                     ))
                                                                 }
@@ -253,10 +226,6 @@ const Product = (props) => {
 
                                                     ))
                                                 }
-
-
-
-
                                             </div>
                                             <section className="product-discounts"></section>
                                             <div className="product-add-to-cart js-product-add-to-cart "
@@ -264,18 +233,21 @@ const Product = (props) => {
                                                 <div className="product-quantity clearfix">
                                                     <div className="single_variation_wrap">
                                                         <div className="single_variation"></div>
-                                                        <div className="variations_button">
-                                                            <div className="jws-quantity-wrap">
-                                                                <div className="quantity">
-                                                                    <div className="jws-qty-minus"></div>
-                                                                    <input type="number" name="qty" id="quantity_wanted"
-                                                                           value="1"
-                                                                           className="input-group input-text qty text"
-                                                                           min="1" aria-label="Số lượng" size="4" step="1"/>
-                                                                    <div className="jws-qty-plus"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        {/*<div className="variations_button">*/}
+                                                        {/*    <div className="jws-quantity-wrap">*/}
+                                                        {/*        <div className="quantity">*/}
+                                                        {/*            <div className="jws-qty-minus"></div>*/}
+                                                        {/*            <input type="number"*/}
+                                                        {/*                   name="qty"*/}
+                                                        {/*                   id="quantity_wanted"*/}
+                                                        {/*                   defaultValue={1}*/}
+                                                        {/*                   className="input-group input-text qty text"*/}
+                                                        {/*                   onChange={formilk.handleChange}*/}
+                                                        {/*                   min="1" aria-label="Số lượng" size="4" step="1"/>*/}
+                                                        {/*            <div className="jws-qty-plus"></div>*/}
+                                                        {/*        </div>*/}
+                                                        {/*    </div>*/}
+                                                        {/*</div>*/}
                                                         <div className="my-size">
                                                             <a className="magnific-image" href="./image/thongsosize.jpg">Bảng
                                                                 size</a>
@@ -285,8 +257,9 @@ const Product = (props) => {
                                                         <div className="my-ship"><span>&nbsp;</span></div>
                                                     </div>
                                                     <div className="add">
-                                                        <button className="single_add_to_cart_button add-to-cart "
-                                                                data-button-action="add-to-cart" type="submit">
+                                                        <button className="single_add_to_cart_button"
+                                                                onClick={formilk.handleSubmit}
+                                                                 type="submit">
                                                             Thêm vào giỏ hàng
                                                         </button>
                                                     </div>

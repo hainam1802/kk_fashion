@@ -25,7 +25,7 @@ const Login = (props) => {
     const username = usernameRef.current.value; //this.usernameRef.current tương đương vs document.getElementById(username)
     const password = passwordRef.current.value;
     console.log(username, password);
-    // setIsWaiting(true)
+    setIsWaiting(true)
     userService.login(username, password).then((res) => {
       setIsWaiting(false);
       if (res.status === 1) {

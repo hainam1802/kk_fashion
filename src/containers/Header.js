@@ -17,17 +17,18 @@ const Header = (props) => {
             <div className="col-md-3 col-sm-6 col-md-push-3 text-right col-xs-5">
               <div className="header-top-wrap">
                 <div className="my-account">
-                  <a className="account" href="https://www.kkfashion.vn/my-account">
+                  <Link className="account" href="/profile">
                     <span className="fontutm">  {userInfo.username ?? 'Tài khoản'}    </span>
                     <i className="pe-7s-user"></i><span className="acount-tt"></span>
-                  </a>
+                  </Link>
                 </div>
                 <div id="_desktop_cart">
-                  <div className="blockcart my-cart " data-refresh-url="//www.kkfashion.vn/module/ps_shoppingcart/ajax">
-                    <a rel="nofollow" href="//www.kkfashion.vn/cart?action=show">
+                  <div className="blockcart my-cart " >
+                    <Link to="/cart">
                       <span className="hidden-xs">Giỏ hàng</span>
-                      <i className="pe-7s-shopbag"></i><span className="count">0</span>
-                    </a>
+                      <i className="pe-7s-shopbag"></i>
+                      {/*<span className="count">0</span>*/}
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -97,10 +98,10 @@ const Header = (props) => {
                   </div>
                   <div className="logo-center text-center">
                     <h1 className="top-logo">
-                      <a className="logo-blance" href="https://www.kkfashion.vn/">
-                        <img className="logo lozad" src="/img/transparent.png"
+                      <Link className="logo-blance" to="/">
+                        <img className="logo lozad" src="https://cdn.kkfashion.vn/img/kk-fashion-logo-1552814160.jpg"
                              data-src="https://cdn.kkfashion.vn/img/kk-fashion-logo-1552814160.jpg"
-                             alt="K&amp;K Fashion"/></a>
+                             alt="K&amp;K Fashion"/></Link>
                     </h1>
                   </div>
                   <div className="right-header text-right w45 flex">
