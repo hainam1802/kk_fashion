@@ -43,19 +43,47 @@ const Product = (props) => {
     const cartItem = useSelector((state)=> state.cart.item)
     const handleSave = (data)=>{
         setIsWaiting(false)
+
+
+
+
+
+
+
+
+
         // Tìm kiếm xem giá trị có tồn tại trong mảng không
             // Lấy chuỗi JSON từ local storage
             const cartItemsJson = localStorage.getItem('cartItems');
-
             // Chuyển đổi chuỗi JSON thành một đối tượng JavaScript
             const cartItems = JSON.parse(cartItemsJson);
+            if (cartItems && cartItems.length > 0){
+                console.log(22)
+                const index = cartItems.findIndex(
+                    item =>
+                        item.id === data.id && JSON.stringify(item.options) === JSON.stringify(data.options)
+                );
 
-            // Nếu không có giá trị nào trong local storage, khởi tạo một mảng rỗng
-            const cartItemsArray = cartItems ? cartItems : [];
-            // Thêm một phần tử mới vào mảng
-            cartItemsArray.push(data);
-            // Lưu lại mảng vào local storage
-            localStorage.setItem('cartItems', JSON.stringify(cartItemsArray));
+                if (index !== -1) {
+                    cartItems[index].qty += 1;
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                }else {
+                    // Nếu không có giá trị nào trong local storage, khởi tạo một mảng rỗng
+                    const cartItemsArray = cartItems ? cartItems : [];
+                    // Thêm một phần tử mới vào mảng
+                    cartItemsArray.push(data);
+                    // Lưu lại mảng vào local storage
+                    localStorage.setItem('cartItems', JSON.stringify(cartItemsArray));
+                }
+            }else {
+                // Nếu không có giá trị nào trong local storage, khởi tạo một mảng rỗng
+                const cartItemsArray = cartItems ? cartItems : [];
+                // Thêm một phần tử mới vào mảng
+                cartItemsArray.push(data);
+                // Lưu lại mảng vào local storage
+                localStorage.setItem('cartItems', JSON.stringify(cartItemsArray));
+            }
+
 
         toast.success("Thêm vào giỏ hàng thành công!");
 
