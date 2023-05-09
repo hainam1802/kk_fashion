@@ -10,6 +10,9 @@ import Input from "../components/Input";
 import {login} from "../store/auth";
 import {useDispatch, useSelector} from "react-redux";
 import {addcart} from "../store/cart";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 const Product = (props) => {
     const [products, setProducts] = useState([]);
@@ -22,6 +25,10 @@ const Product = (props) => {
     const { id,category } = useParams();
     const [isWaiting, setIsWaiting] = useState(false);
     const dispatch = useDispatch();
+    const [nav1, setNav1] = useState(null);
+    const [nav2, setNav2] = useState(null);
+    const [slider1, setSlider1] = useState(null);
+    const [slider2, setSlider2] = useState(null);
     const formilk = useFormik({
         initialValues:{
             id: null,
@@ -43,14 +50,6 @@ const Product = (props) => {
     const cartItem = useSelector((state)=> state.cart.item)
     const handleSave = (data)=>{
         setIsWaiting(false)
-
-
-
-
-
-
-
-
 
         // Tìm kiếm xem giá trị có tồn tại trong mảng không
             // Lấy chuỗi JSON từ local storage
@@ -102,11 +101,75 @@ const Product = (props) => {
             formilk.setFieldValue("price",res.data.price);
             formilk.setFieldValue("price_base",res.data.price_old);
             formilk.setFieldValue("image",res.data.image);
+                setNav1(slider1);
+                setNav2(slider2);
         }
         );
     }, [category,id, navigate]);
+    // const settingsMain = {
+    //     slidesToShow: 1,
+    //     slidesToScroll: 1,
+    //     arrows: false,
+    //     fade: true,
+    //     asNavFor: '.slider-nav',
+    //     loop: true
+    // };
+    // const settingsThumbs = {
+    //     slidesToShow: 4,
+    //     slidesToScroll: 1,
+    //     asNavFor: '.slider-for',
+    //     // dots: true,
+    //     centerMode: true,
+    //     swipeToSlide: true,
+    //     focusOnSelect: true,
+    //     centerPadding: '2px',
+    //     infinite: true,
+    // };
+
+
+
+
+
+
+    const settingsMain = {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        asNavFor: ".slider-for",
+        swipeToSlide: true,
+        focusOnSelect: true,
+    };
+    const settingsThumbs = {
+        infinite: true,
+        centerMode: true,
+        slidesToShow: 3,
+        slidesToScroll: 5,
+        lazyLoad: true,
+        asNavFor: ".slider-nav",
+        focusOnSelect: true,
+    };
+
+    const settings = {
+        slidesToShow: 4,
+        dots: true,
+        centerMode: true,
+        swipeToSlide: true,
+        focusOnSelect: true,
+        centerPadding: '2px',
+        infinite: true,
+        nextArrow: (
+            <div>
+                <div className="next-slick-arrow"> ⫸ </div>
+            </div>
+        ),
+        prevArrow: (
+            <div>
+                <div className="prev-slick-arrow"> ⫷ </div>
+            </div>
+        ),
+    };
     return (
         <>
+
 
             {/*breadcrums*/}
             <div className="page-header single-breadcrums hidden-sm-down" style={{paddingTop: "160px"}}>
@@ -154,19 +217,26 @@ const Product = (props) => {
                 <div className="container">
                     <section id="main">
                         <div className="row">
-                            <div className="content-product-left col-md-6 col-sm-7 col-xs-12">
+                            <div className="content-product-left col-md-6 col-sm-7 col-xs-12 pl-0" style={{paddingLeft: "0"}}>
                                 <section className="page-content" id="content">
-                                    <div className="product-images-content">
+                                    <div className="product-images-content" >
                                         <div className="images-container"></div>
                                             <div className="product-cover blance-images">
                                                 <a className="trigger-zoom" href="javascript:;"></a>
-                                                <figure className="slicker" id="product-images">
+                                                <Slider
+                                                         {...settingsMain}
+                                                         asNavFor={nav2}
+                                                         ref={slider => (setSlider1(slider))}>
 
                                                     { imageExtension.map((aImageExtension, idx) => (
+
                                                             <div
-                                                                 className={`slick-item gallery__image jws-image-zoom ${idx === 0 ? 'show' : ''}`}
+                                                                 className={` gallery__image jws-image-zoom `}
                                                                  key={idx}
-                                                                 data-thumb={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=768`}>                                                                        <img
+                                                                 data-thumb={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=768`} style={{position: "relative"}}>
+
+
+                                                                <img
                                                                 className="img-responsive "
                                                                 src={`https://shop.decor.tichhop.pro/storage${aImageExtension}`}
                                                                 alt="Chân váy midi xòe xếp ly họa tiết caro"
@@ -176,17 +246,20 @@ const Product = (props) => {
                                                         )
                                                     )}
 
-                                                </figure>
+                                                </Slider >
                                             </div>
 
 
-                                            <div className="product-thumbnails" id="product-thumbnails">
-                                                <div className="thumbnails columns-3">
+                                            <div className="thumbnail-slider-wrap" id="">
+                                                <Slider  {...settingsThumbs}
+                                                         asNavFor={nav1}
+                                                         ref={slider => (setSlider2(slider))}
+                                                      >
 
                                                     { imageExtension.map((aImageExtension, idx) => (
-                                                            <div className="thumb1" data-id={idx} key={idx}>
+                                                            <div className="" data-id={idx} key={idx}>
                                                                 <img
-                                                                    className={`thumb js-thumb ${idx === 0 ? 'selected' : ''}`}
+                                                                    className={`thumb js-thumb `}
                                                                     src={`https://shop.decor.tichhop.pro/storage${aImageExtension}?w=150`}
                                                                     alt={products.title}
                                                                     width="78"
@@ -195,7 +268,7 @@ const Product = (props) => {
                                                         )
                                                     )}
 
-                                                </div>
+                                                </Slider>
                                             </div>
                                     </div>
                                 </section>
@@ -388,7 +461,7 @@ const Product = (props) => {
                     </section>
                 </div>
 
-                <div className="block productCat" style={{marginTop: '200px'}}>
+                <div className="block productCat">
                     <section className="featured-products  mt-3">
                         <div className="container">
                             <div className="block-heading">
@@ -400,8 +473,487 @@ const Product = (props) => {
                         <div className="latest-block-list latest-home-block-list">
                             <div className="container block-list">
                                 <div className="row">
+                                    <Slider {...settings}
+
+
+                                    >
+                                        <div className="tb-products-grid ">
+                                            <div className="product-item">
+                                                <div className="product-thumb">
+                                                    <img className=""
+                                                         src="https://cdn.kkfashion.vn/21846-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                         alt="Đầm suông đuôi cá cổ yếm" />
+                                                    <a className="gallery"
+                                                       href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">
+                                                        <img
+                                                            src="https://cdn.kkfashion.vn/21847-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                            alt="Đầm suông đuôi cá cổ yếm" />
+                                                        <div className="kk-size hidden-xs hidden-sm">
+                                                            <div className="size">
+                                                                <span className="pull-left">Size</span>
+                                                                <div className="pull-right">
+                                                                    <ul>
+                                                                        <li>
+                                                                            S
+                                                                        </li>
+                                                                        <li>
+                                                                            M
+                                                                        </li>
+                                                                        <li>
+                                                                            L
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div className="product-content">
+                                                    <div className="item-top">
+                                                <span className="price">
+                                                    <span>490.000 ₫</span>
+                                                 </span>
+                                                    </div>
+                                                    <div className="item-top">
+                                                        <h3 className="product-title text-left">
+                                                            <a href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">Đầm
+                                                                suông đuôi cá cổ yếm <span
+                                                                    className="f12">HL24-01</span></a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="tb-products-grid ">
+                                            <div className="product-item">
+                                                <div className="product-thumb">
+                                                    <img className=""
+                                                         src="https://cdn.kkfashion.vn/21846-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                         alt="Đầm suông đuôi cá cổ yếm" />
+                                                    <a className="gallery"
+                                                       href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">
+                                                        <img
+                                                            src="https://cdn.kkfashion.vn/21847-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                            alt="Đầm suông đuôi cá cổ yếm" />
+                                                        <div className="kk-size hidden-xs hidden-sm">
+                                                            <div className="size">
+                                                                <span className="pull-left">Size</span>
+                                                                <div className="pull-right">
+                                                                    <ul>
+                                                                        <li>
+                                                                            S
+                                                                        </li>
+                                                                        <li>
+                                                                            M
+                                                                        </li>
+                                                                        <li>
+                                                                            L
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div className="product-content">
+                                                    <div className="item-top">
+                                                <span className="price">
+                                                    <span>490.000 ₫</span>
+                                                 </span>
+                                                    </div>
+                                                    <div className="item-top">
+                                                        <h3 className="product-title text-left">
+                                                            <a href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">Đầm
+                                                                suông đuôi cá cổ yếm <span
+                                                                    className="f12">HL24-01</span></a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="tb-products-grid ">
+                                            <div className="product-item">
+                                                <div className="product-thumb">
+                                                    <img className=""
+                                                         src="https://cdn.kkfashion.vn/21846-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                         alt="Đầm suông đuôi cá cổ yếm" />
+                                                    <a className="gallery"
+                                                       href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">
+                                                        <img
+                                                            src="https://cdn.kkfashion.vn/21847-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                            alt="Đầm suông đuôi cá cổ yếm" />
+                                                        <div className="kk-size hidden-xs hidden-sm">
+                                                            <div className="size">
+                                                                <span className="pull-left">Size</span>
+                                                                <div className="pull-right">
+                                                                    <ul>
+                                                                        <li>
+                                                                            S
+                                                                        </li>
+                                                                        <li>
+                                                                            M
+                                                                        </li>
+                                                                        <li>
+                                                                            L
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div className="product-content">
+                                                    <div className="item-top">
+                                                <span className="price">
+                                                    <span>490.000 ₫</span>
+                                                 </span>
+                                                    </div>
+                                                    <div className="item-top">
+                                                        <h3 className="product-title text-left">
+                                                            <a href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">Đầm
+                                                                suông đuôi cá cổ yếm <span
+                                                                    className="f12">HL24-01</span></a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="tb-products-grid ">
+                                            <div className="product-item">
+                                                <div className="product-thumb">
+                                                    <img className=""
+                                                         src="https://cdn.kkfashion.vn/21846-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                         alt="Đầm suông đuôi cá cổ yếm" />
+                                                    <a className="gallery"
+                                                       href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">
+                                                        <img
+                                                            src="https://cdn.kkfashion.vn/21847-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                            alt="Đầm suông đuôi cá cổ yếm" />
+                                                        <div className="kk-size hidden-xs hidden-sm">
+                                                            <div className="size">
+                                                                <span className="pull-left">Size</span>
+                                                                <div className="pull-right">
+                                                                    <ul>
+                                                                        <li>
+                                                                            S
+                                                                        </li>
+                                                                        <li>
+                                                                            M
+                                                                        </li>
+                                                                        <li>
+                                                                            L
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div className="product-content">
+                                                    <div className="item-top">
+                                                <span className="price">
+                                                    <span>490.000 ₫</span>
+                                                 </span>
+                                                    </div>
+                                                    <div className="item-top">
+                                                        <h3 className="product-title text-left">
+                                                            <a href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">Đầm
+                                                                suông đuôi cá cổ yếm <span
+                                                                    className="f12">HL24-01</span></a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="tb-products-grid ">
+                                            <div className="product-item">
+                                                <div className="product-thumb">
+                                                    <img className=""
+                                                         src="https://cdn.kkfashion.vn/21846-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                         alt="Đầm suông đuôi cá cổ yếm" />
+                                                    <a className="gallery"
+                                                       href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">
+                                                        <img
+                                                            src="https://cdn.kkfashion.vn/21847-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                            alt="Đầm suông đuôi cá cổ yếm" />
+                                                        <div className="kk-size hidden-xs hidden-sm">
+                                                            <div className="size">
+                                                                <span className="pull-left">Size</span>
+                                                                <div className="pull-right">
+                                                                    <ul>
+                                                                        <li>
+                                                                            S
+                                                                        </li>
+                                                                        <li>
+                                                                            M
+                                                                        </li>
+                                                                        <li>
+                                                                            L
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div className="product-content">
+                                                    <div className="item-top">
+                                                <span className="price">
+                                                    <span>490.000 ₫</span>
+                                                 </span>
+                                                    </div>
+                                                    <div className="item-top">
+                                                        <h3 className="product-title text-left">
+                                                            <a href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">Đầm
+                                                                suông đuôi cá cổ yếm <span
+                                                                    className="f12">HL24-01</span></a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="tb-products-grid ">
+                                            <div className="product-item">
+                                                <div className="product-thumb">
+                                                    <img className=""
+                                                         src="https://cdn.kkfashion.vn/21846-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                         alt="Đầm suông đuôi cá cổ yếm" />
+                                                    <a className="gallery"
+                                                       href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">
+                                                        <img
+                                                            src="https://cdn.kkfashion.vn/21847-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                            alt="Đầm suông đuôi cá cổ yếm" />
+                                                        <div className="kk-size hidden-xs hidden-sm">
+                                                            <div className="size">
+                                                                <span className="pull-left">Size</span>
+                                                                <div className="pull-right">
+                                                                    <ul>
+                                                                        <li>
+                                                                            S
+                                                                        </li>
+                                                                        <li>
+                                                                            M
+                                                                        </li>
+                                                                        <li>
+                                                                            L
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div className="product-content">
+                                                    <div className="item-top">
+                                                <span className="price">
+                                                    <span>490.000 ₫</span>
+                                                 </span>
+                                                    </div>
+                                                    <div className="item-top">
+                                                        <h3 className="product-title text-left">
+                                                            <a href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">Đầm
+                                                                suông đuôi cá cổ yếm <span
+                                                                    className="f12">HL24-01</span></a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="tb-products-grid ">
+                                            <div className="product-item">
+                                                <div className="product-thumb">
+                                                    <img className=""
+                                                         src="https://cdn.kkfashion.vn/21846-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                         alt="Đầm suông đuôi cá cổ yếm" />
+                                                    <a className="gallery"
+                                                       href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">
+                                                        <img
+                                                            src="https://cdn.kkfashion.vn/21847-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                            alt="Đầm suông đuôi cá cổ yếm" />
+                                                        <div className="kk-size hidden-xs hidden-sm">
+                                                            <div className="size">
+                                                                <span className="pull-left">Size</span>
+                                                                <div className="pull-right">
+                                                                    <ul>
+                                                                        <li>
+                                                                            S
+                                                                        </li>
+                                                                        <li>
+                                                                            M
+                                                                        </li>
+                                                                        <li>
+                                                                            L
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div className="product-content">
+                                                    <div className="item-top">
+                                                <span className="price">
+                                                    <span>490.000 ₫</span>
+                                                 </span>
+                                                    </div>
+                                                    <div className="item-top">
+                                                        <h3 className="product-title text-left">
+                                                            <a href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">Đầm
+                                                                suông đuôi cá cổ yếm <span
+                                                                    className="f12">HL24-01</span></a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="tb-products-grid ">
+                                            <div className="product-item">
+                                                <div className="product-thumb">
+                                                    <img className=""
+                                                         src="https://cdn.kkfashion.vn/21846-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                         alt="Đầm suông đuôi cá cổ yếm" />
+                                                    <a className="gallery"
+                                                       href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">
+                                                        <img
+                                                            src="https://cdn.kkfashion.vn/21847-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                            alt="Đầm suông đuôi cá cổ yếm" />
+                                                        <div className="kk-size hidden-xs hidden-sm">
+                                                            <div className="size">
+                                                                <span className="pull-left">Size</span>
+                                                                <div className="pull-right">
+                                                                    <ul>
+                                                                        <li>
+                                                                            S
+                                                                        </li>
+                                                                        <li>
+                                                                            M
+                                                                        </li>
+                                                                        <li>
+                                                                            L
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div className="product-content">
+                                                    <div className="item-top">
+                                                <span className="price">
+                                                    <span>490.000 ₫</span>
+                                                 </span>
+                                                    </div>
+                                                    <div className="item-top">
+                                                        <h3 className="product-title text-left">
+                                                            <a href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">Đầm
+                                                                suông đuôi cá cổ yếm <span
+                                                                    className="f12">HL24-01</span></a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="tb-products-grid ">
+                                            <div className="product-item">
+                                                <div className="product-thumb">
+                                                    <img className=""
+                                                         src="https://cdn.kkfashion.vn/21846-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                         alt="Đầm suông đuôi cá cổ yếm" />
+                                                    <a className="gallery"
+                                                       href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">
+                                                        <img
+                                                            src="https://cdn.kkfashion.vn/21847-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                            alt="Đầm suông đuôi cá cổ yếm" />
+                                                        <div className="kk-size hidden-xs hidden-sm">
+                                                            <div className="size">
+                                                                <span className="pull-left">Size</span>
+                                                                <div className="pull-right">
+                                                                    <ul>
+                                                                        <li>
+                                                                            S
+                                                                        </li>
+                                                                        <li>
+                                                                            M
+                                                                        </li>
+                                                                        <li>
+                                                                            L
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div className="product-content">
+                                                    <div className="item-top">
+                                                <span className="price">
+                                                    <span>490.000 ₫</span>
+                                                 </span>
+                                                    </div>
+                                                    <div className="item-top">
+                                                        <h3 className="product-title text-left">
+                                                            <a href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">Đầm
+                                                                suông đuôi cá cổ yếm <span
+                                                                    className="f12">HL24-01</span></a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="tb-products-grid ">
+                                            <div className="product-item">
+                                                <div className="product-thumb">
+                                                    <img className=""
+                                                         src="https://cdn.kkfashion.vn/21846-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                         alt="Đầm suông đuôi cá cổ yếm" />
+                                                    <a className="gallery"
+                                                       href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">
+                                                        <img
+                                                            src="https://cdn.kkfashion.vn/21847-large_default/dam-suong-duoi-ca-co-yem-hl24-01.jpg"
+                                                            alt="Đầm suông đuôi cá cổ yếm" />
+                                                        <div className="kk-size hidden-xs hidden-sm">
+                                                            <div className="size">
+                                                                <span className="pull-left">Size</span>
+                                                                <div className="pull-right">
+                                                                    <ul>
+                                                                        <li>
+                                                                            S
+                                                                        </li>
+                                                                        <li>
+                                                                            M
+                                                                        </li>
+                                                                        <li>
+                                                                            L
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div className="product-content">
+                                                    <div className="item-top">
+                                                <span className="price">
+                                                    <span>490.000 ₫</span>
+                                                 </span>
+                                                    </div>
+                                                    <div className="item-top">
+                                                        <h3 className="product-title text-left">
+                                                            <a href="https://www.kkfashion.vn/dam-suong-duoi-ca-co-yem-hl24-01">Đầm
+                                                                suông đuôi cá cổ yếm <span
+                                                                    className="f12">HL24-01</span></a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </Slider>
                                     <div className="element-grid slider-slick">
                                         <div className="item-slick">
+
                                             <div data-position="1" className="tb-products-grid col-md-3 col-sm-6 col-xs-6 ">
                                                 <div className="product-item">
                                                     <div className="product-thumb">
