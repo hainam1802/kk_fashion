@@ -228,7 +228,7 @@ const Category = (props) => {
                                                             </div>
                                                             <div className="item-top">
                                                                 <h3 className="product-title text-left">
-                                                                    <Link  to={`/${categoryProduct.slug}/${item.slug}`}>>Áo
+                                                                    <Link  to={`/${categoryProduct.slug}/${item.slug}`}>
                                                                         {item.title}
                                                                     </Link>
                                                                 </h3>

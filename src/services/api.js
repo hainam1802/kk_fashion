@@ -10,6 +10,7 @@ const url = {
     category: "/category",
     order: "/order",
     profile: "/profile",
+    setting: "/setting",
 
 };
 

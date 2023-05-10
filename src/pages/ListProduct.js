@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import categoryService from "../services/categoryService";
-import {useLocation, useParams} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import {Image} from "react-bootstrap";
 import productService from "../services/productService";
 const ListProduct = (props) => {
@@ -208,8 +208,9 @@ const ListProduct = (props) => {
                                                         </div>
                                                         <div className="product-content">
                                                             <div className="item-top">
-                                                                <p className="code-title fontutm"><a
-                                                                    href="https://www.kkfashion.vn/ao-kieu-co-tron-sat-nach-dang-rong-asm13-23">#{item.id}</a>
+                                                                <p className="code-title fontutm">
+                                                                    <Link
+                                                                        to={`/${item.slug}`}>#{item.id}</Link>
                                                                 </p>
                                                                 <span className="price">
                                                                     <span>{Intl.NumberFormat().format(item.price)} ₫</span>
@@ -217,9 +218,9 @@ const ListProduct = (props) => {
                                                             </div>
                                                             <div className="item-top">
                                                                 <h3 className="product-title text-left">
-                                                                    <a href="https://www.kkfashion.vn/ao-kieu-co-tron-sat-nach-dang-rong-asm13-23">Áo
+                                                                    <Link to={`/${item.slug}`}>
                                                                         {item.title}
-                                                                    </a>
+                                                                    </Link>
                                                                 </h3>
                                                             </div>
                                                         </div>
