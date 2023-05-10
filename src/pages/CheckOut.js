@@ -67,7 +67,7 @@ const OrderReview = (props) => {
 
     return (
         <>
-            <div className="content">
+            <div className="content" style={{marginTop: "160px"}}>
                 <div className="container">
                     <section id="main">
                         <section id="content-hook_order_confirmation" className=" pb60">

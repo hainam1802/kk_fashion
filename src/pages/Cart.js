@@ -50,7 +50,7 @@ const Cart = (props) => {
 
     return (
         <>
-            <div className="content">
+            <div className="content" style={{marginTop: "200px"}}>
                 <div className="container">
                     <section id="main">
                         <div className="cart-grid row">

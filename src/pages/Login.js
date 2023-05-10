@@ -59,7 +59,7 @@ const Login = (props) => {
     ):(
       <>
         <Header />
-        <div className="content">
+        <div className="content" style={{marginTop: "200px"}}>
           <div className="container pb120">
             <div className="login-container">
               <section className="login-form">

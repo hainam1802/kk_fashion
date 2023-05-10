@@ -11,6 +11,9 @@ const url = {
     order: "/order",
     profile: "/profile",
     setting: "/setting",
+    menu: "/menu-category",
+    blog: "/blog",
+
 
 };
 

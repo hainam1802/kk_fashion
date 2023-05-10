@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import categoryService from "../services/categoryService";
 import {Link, useParams} from "react-router-dom";
 import {Image} from "react-bootstrap";
+import Blog from "../widget/Blog";
 const Category = (props) => {
     const { category } = useParams();
     const [items, setItems] = useState([]);
@@ -52,7 +53,7 @@ const Category = (props) => {
     return (
         <>
             {/*breadcrums*/}
-            <div className="page-header single-breadcrums hidden-sm-down" style={{paddingTop: "40px"}} >
+            <div className="page-header single-breadcrums hidden-sm-down" style={{marginTop: "160px"}} >
                 <div className="page-breadcrumbs">
                     <nav data-depth="4" className="breadcrumbs">
                         <ol itemScope="" itemType="http://schema.org/BreadcrumbList">
@@ -67,8 +68,7 @@ const Category = (props) => {
                                 <Link itemProp="item" href="#">
                                     <span itemProp="name">{categoryProduct.title}</span>
                                 </Link>
-                                <meta itemProp="position" content="2" />
-                                    <span className="sep">/</span>
+               
                             </li>
 
                         </ol>
@@ -315,228 +315,8 @@ const Category = (props) => {
                                 </div>
                             </div>
                             {/*Bài viết nổi bật*/}
-                            <div className="block pb-100">
-                                <div className="container">
-                                    <div className="block-heading">
-                                        <h2 className="text-center fontutm block-title">
-                                            <a href="https://www.kkfashion.vn/blog"> Blog </a>
-                                        </h2>
-                                        <div className="block-img-heading text-center"><img
-                                            src="/themes/kkfashion/assets/img//icon-heading.png" alt=""/></div>
-                                    </div>
-                                </div>
-                                <div className="latest-block-list">
-                                    <div className="container block-list">
-                                        <div className="element-grid related-post-slick row">
-                                            <article
-                                                className="blog_post post-item col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <div className="blog_post_content_top">
-                                                    <div className="bog-image post_thumbnail">
-                                                        <a className="hover-img"
-                                                           href="https://www.kkfashion.vn/blog/diem-danh-mau-ao-kieu-dep-tuoi-30-sang-trong-quy-phai">
-                                                            <img
-                                                                className="lozad"
-                                                                data-src="https://cdn.kkfashion.vn/blog-img/home_default-sl1-175329.jpg"
-                                                                src="/img/transparent.png"
-                                                                width="370"
-                                                                height="240"
-                                                                alt="Điểm danh mẫu áo kiểu đẹp tuổi 30 sang trọng, quý phái"
-                                                            />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div className="content-blog">
-                                                    <div className="title">
-                                                        <h3><a
-                                                            href="https://www.kkfashion.vn/blog/diem-danh-mau-ao-kieu-dep-tuoi-30-sang-trong-quy-phai">Điểm
-                                                            danh mẫu áo kiểu đẹp tuổi 30 sang trọng, quý phái</a></h3>
-                                                    </div>
-                                                    <div className="blog-innfo">
-                                                        Áo kiểu đẹp luôn là sự lựa chọn tối ưu nhất đối với những quý cô
-                                                        tuổi 30 vừa thanh lịch lại sang trọng. Cùng K&K Fashion tìm hiểu
-                                                        ...
-                                                        <a className="readmore"
-                                                           href="https://www.kkfashion.vn/blog/diem-danh-mau-ao-kieu-dep-tuoi-30-sang-trong-quy-phai">Xem
-                                                            thêm</a>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                            <article
-                                                className="blog_post post-item col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <div className="blog_post_content_top">
-                                                    <div className="bog-image post_thumbnail">
-                                                        <a className="hover-img"
-                                                           href="https://www.kkfashion.vn/blog/menh-kim-hop-mau-gi-mang-do-gi-cho-thoi-trang">
-                                                            <img
-                                                                className="lozad"
-                                                                data-src="https://cdn.kkfashion.vn/blog-img/home_default-6-175328.jpg"
-                                                                src="/img/transparent.png"
-                                                                width="370"
-                                                                height="240"
-                                                                alt="Mệnh kim hợp màu gì? Mang đồ gì cho thời trang?"
-                                                            />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div className="content-blog">
-                                                    <div className="title">
-                                                        <h3><a
-                                                            href="https://www.kkfashion.vn/blog/menh-kim-hop-mau-gi-mang-do-gi-cho-thoi-trang">Mệnh
-                                                            kim hợp màu gì? Mang đồ gì cho thời trang?</a></h3>
-                                                    </div>
-                                                    <div className="blog-innfo">
-                                                        K&K Fashion sẽ giải đáp thắc mắc của các nàng về mệnh kim hợp
-                                                        màu gì giúp các nàng mệnh kim chọn được trang phục vừa thời
-                                                        trang, ...
-                                                        <a className="readmore"
-                                                           href="https://www.kkfashion.vn/blog/menh-kim-hop-mau-gi-mang-do-gi-cho-thoi-trang">Xem
-                                                            thêm</a>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                            <article
-                                                className="blog_post post-item col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <div className="blog_post_content_top">
-                                                    <div className="bog-image post_thumbnail">
-                                                        <a className="hover-img"
-                                                           href="https://www.kkfashion.vn/blog/bo-suu-tap-thang-5-soak-up-the-sun-trang-phuc-moi-cho-nhung-ngay-nang-he">
-                                                            <img
-                                                                className="lozad"
-                                                                data-src="https://cdn.kkfashion.vn/blog-img/home_default-1200x628-copy-175326.jpg"
-                                                                src="/img/transparent.png"
-                                                                width="370"
-                                                                height="240"
-                                                                alt="Bộ sưu tập tháng 5 “Soak Up the Sun” - trang phục mới cho những ngày nắng hè"
-                                                            />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div className="content-blog">
-                                                    <div className="title">
-                                                        <h3>
-                                                            <a href="https://www.kkfashion.vn/blog/bo-suu-tap-thang-5-soak-up-the-sun-trang-phuc-moi-cho-nhung-ngay-nang-he">
-                                                                Bộ sưu tập tháng 5 “Soak Up the Sun” - trang phục mới
-                                                                cho những ngày nắng hè
-                                                            </a>
-                                                        </h3>
-                                                    </div>
-                                                    <div className="blog-innfo">
-                                                        BST “Soak Up the Sun” của K&K Fashion sẽ mang nàng đến một khung
-                                                        cảnh thiên nhiên rộng lớn hơn, bao la hơn cùng những thiết kế
-                                                        bay ...
-                                                        <a className="readmore"
-                                                           href="https://www.kkfashion.vn/blog/bo-suu-tap-thang-5-soak-up-the-sun-trang-phuc-moi-cho-nhung-ngay-nang-he">Xem
-                                                            thêm</a>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                            <article
-                                                className="blog_post post-item col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <div className="blog_post_content_top">
-                                                    <div className="bog-image post_thumbnail">
-                                                        <a className="hover-img"
-                                                           href="https://www.kkfashion.vn/blog/kham-pha-dam-du-tiec-sang-trong-quy-phai-cua-kk-fashion">
-                                                            <img
-                                                                className="lozad"
-                                                                data-src="https://cdn.kkfashion.vn/blog-img/home_default-22-7-175325.jpg"
-                                                                src="/img/transparent.png"
-                                                                width="370"
-                                                                height="240"
-                                                                alt="Khám phá đầm dự tiệc sang trọng quý phái của K&amp;K Fashion"
-                                                            />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div className="content-blog">
-                                                    <div className="title">
-                                                        <h3><a
-                                                            href="https://www.kkfashion.vn/blog/kham-pha-dam-du-tiec-sang-trong-quy-phai-cua-kk-fashion">Khám
-                                                            phá đầm dự tiệc sang trọng quý phái của K&amp;K Fashion</a>
-                                                        </h3>
-                                                    </div>
-                                                    <div className="blog-innfo">
-                                                        Nếu các quý cô vẫn đang không biết mặc gì vào bữa tiệc sắp tới
-                                                        thì tham khảo ngay bài viết của K&K Fashion để tìm ra đầm dự
-                                                        tiệc ...
-                                                        <a className="readmore"
-                                                           href="https://www.kkfashion.vn/blog/kham-pha-dam-du-tiec-sang-trong-quy-phai-cua-kk-fashion">Xem
-                                                            thêm</a>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                            <article
-                                                className="blog_post post-item col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <div className="blog_post_content_top">
-                                                    <div className="bog-image post_thumbnail">
-                                                        <a className="hover-img"
-                                                           href="https://www.kkfashion.vn/blog/tips-chon-vay-di-bien-cho-nguoi-bap-tay-to">
-                                                            <img
-                                                                className="lozad"
-                                                                data-src="https://cdn.kkfashion.vn/blog-img/home_default-tips-chon-vay-dam-di-bien-dep-cho-nguoi-bap-tay-to-175324.jpg"
-                                                                src="/img/transparent.png"
-                                                                width="370"
-                                                                height="240"
-                                                                alt="Tips chọn váy đi biển cho người bắp tay to"
-                                                            />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div className="content-blog">
-                                                    <div className="title">
-                                                        <h3><a
-                                                            href="https://www.kkfashion.vn/blog/tips-chon-vay-di-bien-cho-nguoi-bap-tay-to">Tips
-                                                            chọn váy đi biển cho người bắp tay to</a></h3>
-                                                    </div>
-                                                    <div className="blog-innfo">
-                                                        Hè đến cũng là lúc các cô nàng bắp tay to không biết chọn váy đi
-                                                        biển như thế nào cho phù hợp. Hãy để K&K Fashion chia sẻ cho bạn
-                                                        ...
-                                                        <a className="readmore"
-                                                           href="https://www.kkfashion.vn/blog/tips-chon-vay-di-bien-cho-nguoi-bap-tay-to">Xem
-                                                            thêm</a>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                            <article
-                                                className="blog_post post-item col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <div className="blog_post_content_top">
-                                                    <div className="bog-image post_thumbnail">
-                                                        <a className="hover-img"
-                                                           href="https://www.kkfashion.vn/blog/bst-have-love-will-travel-kk-fashion-se-mang-den-nang-tinh-yeu-dac-biet-danh-cho-nhng-chuyen-di-">
-                                                            <img
-                                                                className="lozad"
-                                                                data-src="https://cdn.kkfashion.vn/blog-img/home_default-1200x628-copy-175322.jpg"
-                                                                src="/img/transparent.png"
-                                                                width="370"
-                                                                height="240"
-                                                                alt="BST “Have Love, Will Travel” - K&amp;K Fashion sẽ mang đến nàng tình yêu đặc biệt dành cho những chuyến đi "
-                                                            />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div className="content-blog">
-                                                    <div className="title">
-                                                        <h3>
-                                                            <a href="https://www.kkfashion.vn/blog/bst-have-love-will-travel-kk-fashion-se-mang-den-nang-tinh-yeu-dac-biet-danh-cho-nhng-chuyen-di-">
-                                                                BST “Have Love, Will Travel” - K&amp;K Fashion sẽ mang
-                                                                đến nàng tình yêu đặc biệt dành cho những chuyến đi
-                                                            </a>
-                                                        </h3>
-                                                    </div>
-                                                    <div className="blog-innfo">
-                                                        Bộ sưu tập “Have Love, Will Travel” của K&K Fashion ra mắt với
-                                                        mong muốn sẽ đồng hành cùng nàng trong suốt kỳ nghỉ lễ sắp đến,
-                                                        cho ...
-                                                        <a className="readmore"
-                                                           href="https://www.kkfashion.vn/blog/bst-have-love-will-travel-kk-fashion-se-mang-den-nang-tinh-yeu-dac-biet-danh-cho-nhng-chuyen-di-">Xem
-                                                            thêm</a>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {/*blog*/}
+                            <Blog />
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,7 @@ const ListProduct = (props) => {
 
         productService.list(page,id,title,price).then((res) => {
             setItems(res.items_prd.data);
+            console.log(res.items_prd.data)
             setTotalPages(res.items_prd.last_page);
             setCurrentPage(res.items_prd.current_page);
         });
@@ -53,7 +54,7 @@ const ListProduct = (props) => {
     return (
         <>
             {/*breadcrums*/}
-            <div className="page-header single-breadcrums hidden-sm-down" style={{paddingTop: "40px"}} >
+            <div className="page-header single-breadcrums hidden-sm-down" style={{marginTop: "160px"}} >
                 <div className="page-breadcrumbs">
                     <nav data-depth="4" className="breadcrumbs">
                         <ol itemScope="" itemType="http://schema.org/BreadcrumbList">
@@ -179,8 +180,8 @@ const ListProduct = (props) => {
 
                                                                 alt={item.title}
                                                             />
-                                                            <a className="gallery"
-                                                               href="https://www.kkfashion.vn/ao-kieu-co-tron-sat-nach-dang-rong-asm13-23">
+                                                            <Link className="gallery"
+                                                               to={`/${item.groups[0].slug}/${item.slug}`}>
                                                                 <Image
                                                                     sizes="(min-width: 64rem) 33.33vw, (min-width: 0rem) 50vw"
                                                                     src={`https://shop.decor.tichhop.pro/storage${item.image}`}
@@ -204,13 +205,13 @@ const ListProduct = (props) => {
                                                                 {/*        </div>*/}
                                                                 {/*    </div>*/}
                                                                 {/*</div>*/}
-                                                            </a>
+                                                            </Link>
                                                         </div>
                                                         <div className="product-content">
                                                             <div className="item-top">
                                                                 <p className="code-title fontutm">
                                                                     <Link
-                                                                        to={`/${item.slug}`}>#{item.id}</Link>
+                                                                        to={`/${item.groups[0].slug}/${item.slug}`}>#{item.id}</Link>
                                                                 </p>
                                                                 <span className="price">
                                                                     <span>{Intl.NumberFormat().format(item.price)} ₫</span>
@@ -218,7 +219,7 @@ const ListProduct = (props) => {
                                                             </div>
                                                             <div className="item-top">
                                                                 <h3 className="product-title text-left">
-                                                                    <Link to={`/${item.slug}`}>
+                                                                    <Link to={`/${item.groups[0].slug}/${item.slug}`}>
                                                                         {item.title}
                                                                     </Link>
                                                                 </h3>

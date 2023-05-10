@@ -3,6 +3,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../store/auth";
+import MainMenu from "../widget/MainMenu";
 const Header = (props) => {
   const userInfo = useSelector((state)=> state.auth.userInfo)
   const dispatch = useDispatch()
@@ -53,60 +54,9 @@ const Header = (props) => {
               <nav className="menu_nav">
                 <div className="flex mainmenu">
                   <div className="position_fix fontutm w45">
-                    <div className="button_menu hidden-lg hidden-md"><i className="fa fa-bars"></i></div>
-                    <ul className="nav navbar-nav hidden-xs hidden-sm" id="nav">
-                      <li className="menu-item"><a data-list-type="Header" data-content-type="Navigation"
-                                                   data-content-title="Giới thiệu" data-content-id="4"
-                                                   href="https://www.kkfashion.vn/page/gioi-thieu">Giới thiệu</a>
-                        <div className="sub-menu-dropdown">
-                          <ul className="sub-menu">
-                            <li><a data-list-type="Header" data-content-type="Navigation"
-                                   data-content-title="Về chúng tôi" data-content-id="4"
-                                   href="https://www.kkfashion.vn/page/gioi-thieu">Về chúng tôi</a></li>
-                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Liên hệ"
-                                   data-content-id="contact" href="https://www.kkfashion.vn/lien-he-voi-chung-toi">Liên
-                              hệ</a></li>
-                            <li><a data-list-type="Header" data-content-type="Navigation"
-                                   data-content-title="Chính sách bảo mật" data-content-id="3"
-                                   href="https://www.kkfashion.vn/page/chinh-sach-bao-mat-van-chuyen-giao-nhan-va-doi-hang">Chính
-                              sách bảo mật</a></li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li className="menu-item"><a data-list-type="Header" data-content-type="Navigation"
-                                                   data-content-title="Shop Online" data-content-id="2"
-                                                   href="https://www.kkfashion.vn/thoi-trang-cong-so">Shop Online</a>
-                        <div className="sub-menu-dropdown">
-                          <ul className="sub-menu">
-                            <li><a data-list-type="Header" data-content-type="Navigation"
-                                   data-content-title="New Collection" data-content-id="116" className="sales"
-                                   href="https://www.kkfashion.vn/new-collection">New Collection</a></li>
-                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Áo Dài"
-                                   data-content-id="125" className="" href="https://www.kkfashion.vn/ao-dai">Áo Dài</a>
-                            </li>
-                            <li><a data-list-type="Header" data-content-type="Navigation"
-                                   data-content-title="Váy đầm công sở" data-content-id="65" className=""
-                                   href="https://www.kkfashion.vn/vay-dam-cong-so">Váy đầm công sở</a></li>
-                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Áo"
-                                   data-content-id="63" className="" href="https://www.kkfashion.vn/ao">Áo</a></li>
-                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Áo khoác"
-                                   data-content-id="62" className="" href="https://www.kkfashion.vn/ao-khoac">Áo
-                              khoác</a></li>
-                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Quần"
-                                   data-content-id="64" className="" href="https://www.kkfashion.vn/quan">Quần</a></li>
-                            <li><a data-list-type="Header" data-content-type="Navigation" data-content-title="Chân váy"
-                                   data-content-id="112" className="" href="https://www.kkfashion.vn/chan-vay-cong-so">Chân
-                              váy</a></li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li className="menu-item"><a data-list-type="Header" data-content-type="Navigation"
-                                                   data-content-title="Blog" data-content-id="blog"
-                                                   href="https://www.kkfashion.vn/blog">Blog</a></li>
-                      <li className="menu-item"><a data-list-type="Header" data-content-type="Navigation"
-                                                   data-content-title="Lookbook" data-content-id="lookbook"
-                                                   href="https://www.kkfashion.vn/lookbook">Lookbook</a></li>
-                    </ul>
+                    <div className="button_menu hidden-lg hidden-md">
+                      <i className="fa fa-bars"></i></div>
+                       <MainMenu/>
                   </div>
                   <div className="logo-center text-center">
                     <h1 className="top-logo">

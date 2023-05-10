@@ -44,7 +44,7 @@ const SuggestProduct = (props) => {
                                         <Slider {...settings1} >
                                             {
                                                 suggestProduct.map((aSale, idx) => (
-                                                    <div className="product-item" style={{padding: "8px"}}>
+                                                    <div className="product-suggest product-item" style={{padding: "8px"}}>
                                                         <Link className="gallery"
                                                            to={`/${aSale.item.groups[0].slug}/${aSale.item.slug}`}
                                                            tabIndex="0">

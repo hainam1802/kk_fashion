@@ -17,7 +17,7 @@ const Profile = (props) => {
     }, [token]);
     return (
         <>
-            <div className="page-header single-breadcrums hidden-sm-down" style={{paddingTop: "40px"}}>
+            <div className="page-header single-breadcrums hidden-sm-down" style={{marginTop: "160px"}}>
                 <div className="page-breadcrumbs">
                     <nav data-depth="3" className="breadcrumbs">
                         <ol itemScope="" itemType="http://schema.org/BreadcrumbList">

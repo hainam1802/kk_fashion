@@ -70,7 +70,7 @@ const OrderReview = (props) => {
     return (
         <>
             <div className="content">
-                <div className="container">
+                <div className="container" style={{marginTop: "160px"}}>
                     <div className="row">
                         <div className="col-md-6">
                             <div className="cart-block payment-block">

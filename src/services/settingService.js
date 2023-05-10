@@ -7,9 +7,14 @@ const getWidget = (id) => {
   return api.get(`${api.url.setting}/get-widget?id=${id}`)
 };
 
+const getMenu = (id) => {
+  return api.get(`${api.url.menu}`)
+};
+
 const settingService = {
   getAds,
-  getWidget
+  getWidget,
+  getMenu
 };
 
 export default settingService;
