@@ -126,11 +126,6 @@ const Product = (props) => {
     //     infinite: true,
     // };
 
-
-
-
-
-
     const settingsMain = {
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -147,7 +142,6 @@ const Product = (props) => {
         asNavFor: ".slider-nav",
         focusOnSelect: true,
     };
-
     const settings = {
         slidesToShow: 4,
         dots: true,
@@ -169,8 +163,6 @@ const Product = (props) => {
     };
     return (
         <>
-
-
             {/*breadcrums*/}
             <div className="page-header single-breadcrums hidden-sm-down" style={{paddingTop: "160px"}}>
                 <div className="page-breadcrumbs">

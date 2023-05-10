@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../store/auth";
 const Header = (props) => {
   const userInfo = useSelector((state)=> state.auth.userInfo)
   const dispatch = useDispatch()
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigate(`/search?q=${searchTerm}`);
+
+  };
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
   return (
     <>
       <div id="header-page" className="nav-fixed">
@@ -17,7 +29,7 @@ const Header = (props) => {
             <div className="col-md-3 col-sm-6 col-md-push-3 text-right col-xs-5">
               <div className="header-top-wrap">
                 <div className="my-account">
-                  <Link className="account" href="/profile">
+                  <Link className="account" to="/profile">
                     <span className="fontutm">  {userInfo.username ?? 'Tài khoản'}    </span>
                     <i className="pe-7s-user"></i><span className="acount-tt"></span>
                   </Link>
@@ -127,8 +139,11 @@ const Header = (props) => {
                       </ul>
                     </div>
                     <div className="search-form">
-                      <div className="action-search"><a href="javascript:;" aria-label="Tìm kiếm"><i
-                          className="pe-7s-search"></i></a></div>
+                      <form onSubmit={handleSubmit} className="search-action">
+                        <input type="text" value={searchTerm} onChange={handleChange}  placeholder="Nhập tên sản phẩm" />
+                        <button type="submit"> <i className="pe-7s-search"></i></button>
+                      </form>
+
                     </div>
                   </div>
                 </div>
@@ -142,4 +157,4 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+export default Header; ;

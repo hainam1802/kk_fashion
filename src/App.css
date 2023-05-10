@@ -58,3 +58,21 @@
   color: #000000;
   font-size: 45px;
 }
+.pagination-number .page-numbers li.active{
+  font-weight: bold;
+  font-size: 18px;
+}
+.search-action{
+  position: relative;
+}
+.search-action input{
+  padding: 6px 8px;
+}
+.search-action button{
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+}

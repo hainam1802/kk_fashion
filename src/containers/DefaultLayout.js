@@ -9,24 +9,30 @@ import Header from "./Header";
 import routes from "./../routes";
 import {useSelector} from "react-redux";
 import {Navigate} from "react-router";
+import routesAdmin from "../routesAdmin";
 const DefaultLayout = (props) => {
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   return (
     <>
-        {!isLoggedIn ? (
-            <Navigate to="/login" />
-        ):(
-            <>
-                <Header />
-                <Routes>
-                    {routes.map((route, idx) => (
-                        <Route key={idx} path={route.path} element={route.component} />
-                    ))}
-                </Routes>
-            </>
-        )
-        }
 
+        <Header />
+        <Routes>
+            {routesAdmin.map((route, idx) => (
+                <Route key={idx} path={route.path} element={route.component} />
+            ))}
+        </Routes>
+        {/*{!isLoggedIn ? (*/}
+        {/*    <Navigate to="/login" />*/}
+        {/*):(*/}
+        {/*    <>*/}
+        {/*        <Routes>*/}
+        {/*            {routes.map((route, idx) => (*/}
+        {/*                <Route key={idx} path={route.path} element={route.component} />*/}
+        {/*            ))}*/}
+        {/*        </Routes>*/}
+        {/*    </>*/}
+        {/*)*/}
+        {/*}*/}
     </>
   );
 };

@@ -6,10 +6,10 @@ const url = {
     baseUrl: "https://shop.decor.tichhop.pro/api/client",
     login: "/login",
     register: "/register",
-    majors: "/majors", //bên trái là của js bên phải là của api
-    students: "/students", //bên trái là của js bên phải là của api
     product: "/product",
+    category: "/category",
     order: "/order",
+    profile: "/profile",
 
 };
 
@@ -64,6 +64,7 @@ const api = {
     url,
     instance,
     get: instance.get,
+    getHistory: instance.get,
     post: instance.post,
     put: instance.put,
     delete: instance.delete,
