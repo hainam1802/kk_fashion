@@ -7,7 +7,7 @@ import settingService from "../services/settingService";
 const Ads1 = (props) => {
     const id = "BANNER_ADS_1";
     const [ads1,setAds1] = useState([])
-
+    // sds
     useEffect(() => {
         settingService.getAds(id).then((res) => {
             setAds1(res.data)
