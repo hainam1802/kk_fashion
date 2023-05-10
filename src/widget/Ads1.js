@@ -19,26 +19,30 @@ const Ads1 = (props) => {
             <div className="background-block">
                 <div className="latest-block-list latest-home-block-list">
                     <div className="container block-list">
-                        <div className="row">
-                            <div className="col-md-7 text-right">
-                                <div className="video-container">
-                                    <div className="blance-video" data-yt-title="SOAK UP THE SUN"
-                                         data-yt-url="https://www.youtube.com/embed/7p09GmbTsA8?feature=oembed&autoplay=1">
-                                        <img width="100%"
-                                             src={`https://shop.decor.tichhop.pro/storage${ads1[0].image}`}
-                                             alt="SOAK UP THE SUN"/>
+                        {
+                            ads1.map((aAds1, idx) => (
+                                <div className="row">
+                                    <div className="col-md-7 text-right">
+                                        <div className="video-container">
+                                            <div className="blance-video" data-yt-title="SOAK UP THE SUN"
+                                                 data-yt-url="https://www.youtube.com/embed/7p09GmbTsA8?feature=oembed&autoplay=1">
+                                                <img width="100%"
+                                                     src={`https://shop.decor.tichhop.pro/storage${aAds1.image}`}
+                                                     alt="SOAK UP THE SUN"/>
 
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div className="col-md-5">
+                                        <div className="video-content">
+                                            <h2 className="fontutm">{aAds1.title}</h2>
+                                            <p>{aAds1.content } </p>
+                                        </div>
+                                    </div>
+                                    <div className="cleafix"></div>
                                 </div>
-                            </div>
-                            <div className="col-md-5">
-                                <div className="video-content">
-                                    <h2 className="fontutm">{ads1[0].title}</h2>
-                                    <p>{ ads1[0].content } </p>
-                                </div>
-                            </div>
-                            <div className="cleafix"></div>
-                        </div>
+                        ))}
+
                     </div>
                 </div>
             </div>
