@@ -13,11 +13,13 @@ import Category from "./pages/Category";
 import ListProduct from "./pages/ListProduct";
 import Profile from "./pages/Profile";
 import OrderHistory from "./pages/OrderHistory";
+import Blog from "./widget/Blog";
+import BlogCategory from "./pages/BlogCategory";
 
 const routesAdmin = [
   { path: "", component: <Home /> },
   { path: "/home", component: <Home /> },
-  { path: "/:category/:id", component: <Product /> },
+  // { path: "/:category/:id", component: <Product /> },
   { path: "/:category", component: <Category /> },
   { path: "/search", component: <ListProduct /> },
   { path: "/not-found", component: <NotFound /> },
@@ -30,6 +32,8 @@ const routesAdmin = [
   { path: "/checkout", component: <CheckOut /> },
   { path: "/cart", component: <Cart /> },
   { path: "/profile", component: <Profile /> },
+  { path: "/blog/:category", component: <BlogCategory /> },
+  { path: "/blog/:category/:id", component: <Blog /> },
 ];
 
 export default routesAdmin;

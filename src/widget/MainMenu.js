@@ -35,7 +35,7 @@ const MainMenu = (props) => {
                                             <li key={child.id}>
                                                 <Link data-list-type="Header" data-content-type="Navigation"
                                                    data-content-title="Về chúng tôi" data-content-id="4"
-                                                   to={`${child.slug}`}>{child.title}</Link>
+                                                   to={`${child.url ?? child.slug}`}>{child.title}</Link>
                                             </li>
 
                                     ))}

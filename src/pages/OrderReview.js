@@ -55,7 +55,7 @@ const OrderReview = (props) => {
                 localStorage.removeItem('cartItems');
 
             } else {
-                toast.error(res.errorCode);
+                toast.error(res.message);
             }
         });
 
@@ -79,7 +79,6 @@ const OrderReview = (props) => {
                                     <section >
                                         <div className="card-block">
                                             <div className="cart-summary-products">
-                                                <p className="pdt10">1 sản phẩm</p>
                                                 {
                                                     items.map((aItems,idx) => (
                                                         <div className="collapse in" id="cart-summary-product-list">
