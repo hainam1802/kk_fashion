@@ -1,11 +1,11 @@
 import api from "./api";
 
-const list = () => {
-  return api.get(api.url.product)
-};
 
 const get = (category,id) => {
   return api.get(`${api.url.product}/${category}/${id}`)
+};
+const list = (page,id,title,price) => {
+  return api.get(`${api.url.product}?page=${page}&id=${id}&title=${title}&price=${price}`)
 };
 
 const add = (data) => {

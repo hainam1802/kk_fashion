@@ -16,9 +16,15 @@ const register = (taikhoan, matkhau,matkhauxacnhan,email,sodienthoai) => {
   };
   return api.post(api.url.register, data)
 };
+
+const get = (token) => {
+  return api.get(`${api.url.profile}?token=${token}`)
+};
+
 const userService = {
   login,
-  register
+  register,
+  get
 };
 
 export default userService;
